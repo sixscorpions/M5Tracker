@@ -1,7 +1,9 @@
-package com.magni5.m5tracker;
+package com.magni5.m5tracker.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.magni5.m5tracker.R;
 
 public class MainActivity extends Activity {
 
