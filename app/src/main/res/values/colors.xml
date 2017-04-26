@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="fill_color">#6600FFFF</color>
+    <color name="stroke_color">#BB00FFFF</color>
+    <color name="colorPrimary">#0181CC</color>
+    <color name="colorPrimaryDark">#0181CC</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorAccent">#0181CC</color>
+    <color name="black_color">#000000</color>
+    <color name="error_color">#ff0000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="green">#4DC42A</color>
+    <color name="green_light">#49B526</color>
+    <color name="bg">#EFF4F7</color>
+    <color name="gray">#ececec</color>
+    <color name="light_gray">#999999</color>
+    <color name="fb_bg">#224A9F</color>
+    <color name="yellow">#FDBD03</color>
+    <color name="twitter_bg">#1BB2E9</color>
+    <color name="menu_bg">#172027</color>
+    <color name="menu_text_color">#71C251</color>
+    <color name="note_color">#FBF2E9</color>
+
+    <color name="divider">#CACCCD</color>
+    <color name="account_bg_item">#f8f8f8</color>
+
+    <color name="account_bg_divider_item">#e8e8e8</color>
+    <color name="linked_bg">#437DA2</color>
+    <color name="bg_how_it_works_one">#E6F9FF</color>
+    <color name="bg_how_it_works_two">#E6FDE9</color>
+    <color name="bg_how_it_works_three">#EAF7FC</color>
+    <color name="bg_how_it_works_four">#E5FEE8</color>
+    <color name="dark_green">#7DB179</color>
+
+    <color name="home_green">#D2EDCE</color>
+    <color name="home_gray">#E7F1FA</color>
+    <color name="history_bg_color">#f3fbfe</color>
+    <color name="history_grp_bg_color">#f0f0f0</color>
+
+    <color name="button_teal_color">#009688</color>
+    <color name="live_tracking_card_background">#ECEFF1</color>
+
+    <color name="group_layout_bg">#0810CC</color>
+
+    <color name="how_it_works">#55b95d</color>
+    <color name="how_it_works1">#e5fee7</color>
+
 </resources>

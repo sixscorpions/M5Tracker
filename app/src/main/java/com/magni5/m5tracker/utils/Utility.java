@@ -1,10 +1,19 @@
 package com.magni5.m5tracker.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.magni5.m5tracker.R;
 
 /**
  * Created by Manikanta on 4/25/2017.
@@ -74,5 +83,51 @@ public class Utility {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Sets the status bar colors to transparent so you
+     * got feel like status bar is removed. This method is
+     * used for splash screen.
+     *
+     * @param context Have to send the Context of that activity
+     **/
+    public static void setTranslateStatusBar(AppCompatActivity context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            Window window = context.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(context, R.color.transparent));
+        }
+    }
+
+    /**
+     * ASSIGN THE COLOR
+     **/
+    public static int getColor(Context context, int id) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 23)
+            return ContextCompat.getColor(context, id);
+        else
+            return context.getResources().getColor(id);
+    }
+
+    /**
+     * GET SHARED PREFERENCES STRING DATA
+     */
+    public static String getSharedPrefStringData(Context context, String key) {
+
+        try {
+            SharedPreferences userAcountPreference = context
+                    .getSharedPreferences(Constants.APP_PREF,
+                            Context.MODE_PRIVATE);
+            return userAcountPreference.getString(key, "");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return "";
+
     }
 }

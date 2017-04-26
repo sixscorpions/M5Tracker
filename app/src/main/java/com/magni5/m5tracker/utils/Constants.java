@@ -9,4 +9,7 @@ public class Constants {
     // Log message On or Off
     public static final boolean logMessageOnOrOff = true;
     public static final String IMAGES_FOLDER = "Images/";
+    public static int SPLASH_TIME_OUT = 2000;
+
+    public static final String APP_PREF = "M5Tracker_Pref";
 }
