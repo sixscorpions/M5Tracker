@@ -9,10 +9,12 @@
     <color name="black_color">#000000</color>
     <color name="error_color">#ff0000</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_opacity">#99FFFFFF</color>
     <color name="green">#4DC42A</color>
     <color name="green_light">#49B526</color>
     <color name="bg">#EFF4F7</color>
     <color name="gray">#ececec</color>
+    <color name="opacity_gray">#26000000</color>
     <color name="light_gray">#999999</color>
     <color name="fb_bg">#224A9F</color>
     <color name="yellow">#FDBD03</color>
@@ -41,8 +43,11 @@
     <color name="live_tracking_card_background">#ECEFF1</color>
 
     <color name="group_layout_bg">#0810CC</color>
+    <color name="light_blue">#47b4ef</color>
 
     <color name="how_it_works">#55b95d</color>
     <color name="how_it_works1">#e5fee7</color>
+
+    <color name="error_alert">#FFCCCC</color>
 
 </resources>

@@ -10,6 +10,6 @@
         android:layout_height="200dp"
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/logo" />
+        android:src="@drawable/login_logo_icon" />
 
 </RelativeLayout>

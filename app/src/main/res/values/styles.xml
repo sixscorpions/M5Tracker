@@ -21,4 +21,13 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="style_login_edit_text">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white_opacity</item>
+        <item name="android:background">@drawable/drawable_login_edittext</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/_16dp</item>
+    </style>
 </resources>

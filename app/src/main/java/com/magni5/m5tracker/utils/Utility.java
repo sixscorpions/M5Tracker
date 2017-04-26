@@ -2,6 +2,7 @@ package com.magni5.m5tracker.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -129,5 +130,17 @@ public class Utility {
         }
         return "";
 
+    }
+
+    /**
+     * ASSIGN THE DRAWBLE
+     **/
+    public static Drawable getDrawable(Context context, int id) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 21) {
+            return ContextCompat.getDrawable(context, id);
+        } else {
+            return context.getResources().getDrawable(id);
+        }
     }
 }
