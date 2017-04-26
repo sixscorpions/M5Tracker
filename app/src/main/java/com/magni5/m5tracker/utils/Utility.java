@@ -6,6 +6,11 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -142,5 +147,21 @@ public class Utility {
         } else {
             return context.getResources().getDrawable(id);
         }
+    }
+
+
+    public static void navigateDashBoardFragment(Fragment fragment,
+                                                 String tag, Bundle bundle, FragmentActivity fragmentActivity) {
+        FragmentManager fragmentManager = fragmentActivity
+                .getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager
+                .beginTransaction();
+        if (bundle != null) {
+            fragment.setArguments(bundle);
+        }
+        fragmentTransaction.replace(R.id.content_frame, fragment, tag);
+        //if (!tag.equalsIgnoreCase(HomeFragment.TAG))
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
     }
 }
