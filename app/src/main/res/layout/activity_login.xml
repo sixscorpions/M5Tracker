@@ -37,6 +37,7 @@
             android:layout_marginBottom="@dimen/_5dp"
             android:hint="@string/user_name"
             android:inputType="textNoSuggestions"
+            android:text="rss.srinivas@magni5.net"
             android:textSize="@dimen/_14sp" />
 
         <EditText
@@ -45,19 +46,20 @@
             android:layout_marginTop="@dimen/_5dp"
             android:hint="@string/password"
             android:inputType="textPassword|textNoSuggestions"
+            android:text="test123"
             android:textSize="@dimen/_14sp" />
     </LinearLayout>
+
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lly_login_edit_texts"
+        android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/_60dp"
         android:background="@drawable/drawable_login_button"
-        android:layout_centerInParent="true"
-        android:paddingStart="@dimen/_50dp"
         android:paddingEnd="@dimen/_50dp"
-        android:textColor="@android:color/white"
+        android:paddingStart="@dimen/_50dp"
         android:text="@string/submit"
-        />
+        android:textColor="@android:color/white" />
 </RelativeLayout>

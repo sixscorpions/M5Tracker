@@ -1,12 +1,8 @@
 package com.magni5.m5tracker.activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.asynctask.IAsyncCaller;
@@ -50,11 +46,6 @@ public class LoginActivity extends BaseActivity implements IAsyncCaller {
     void editProfilePicture() {
         if (Validations.isValidUserOrNot(this, et_user_name, et_password)) {
             signInApiCall(et_user_name.getText().toString(), et_password.getText().toString());
-//api call
-
-            Validations.setSnackBar(this, btn_submit, "api call");
-     /*       Intent dashBoardIntent = new Intent(this, MainActivity.class);
-            startActivity(dashBoardIntent);*/
         }
     }
 
@@ -77,7 +68,7 @@ public class LoginActivity extends BaseActivity implements IAsyncCaller {
             SignInParser mSignInParser = new SignInParser();
             ServerJSONAsyncTask serverJSONAsyncTask = new ServerJSONAsyncTask(
                     this, Utility.getResourcesString(this, R.string.please_wait), true,
-                    APIConstants.SIGNIN, jsonParam,
+                    APIConstants.SIGN_IN, jsonParam,
                     APIConstants.REQUEST_TYPE.POST, this, mSignInParser);
             Utility.execute(serverJSONAsyncTask);
         } catch (JSONException e) {

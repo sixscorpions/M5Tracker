@@ -17,5 +17,5 @@
     <string name="no_str">NO</string>
     <string name="yes_str">YES</string>
     <string name="are_you_sure_you_want_to_logout">Are you sure, you want to logout?</string>
-    <string name="please_wait"><![CDATA[Please wait &#8230;]]></string>
+    <string name="please_wait">Please wait</string>
 </resources>

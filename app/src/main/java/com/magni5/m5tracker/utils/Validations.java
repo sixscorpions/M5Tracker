@@ -41,10 +41,10 @@ public class Validations {
         }else if(Utility.isValueNullOrEmpty(mPassword.getText().toString())){
             setSnackBar(mContext,mPassword,"Please enter password");
             isValid = false;
-        }else if (!mPassword.getText().toString().matches("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{6,14}")){
+        }/*else if (!mPassword.getText().toString().matches("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{6,14}")){
             setSnackBar(mContext,mPassword,"Please enter valid password");
             isValid = false;
-        }
+        }*/
         return isValid;
     }
 }
