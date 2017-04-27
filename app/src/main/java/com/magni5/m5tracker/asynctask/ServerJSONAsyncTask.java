@@ -23,11 +23,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +39,8 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
     private String mResponse = null;
     private Model model;
     private int CONNECTION_TIME_OUT = 8000;
+    private java.net.CookieManager msCookieManager = new java.net.CookieManager();
+    static final String COOKIES_HEADER = "Set-Cookie";
 
     public ServerJSONAsyncTask(Context context, String dialogMessage,
                                boolean showDialog, String url, LinkedHashMap<String, String> mParams,
@@ -266,6 +270,22 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
             } catch (IOException e1) {
                 e1.printStackTrace();
                 return null;
+            }
+
+            Map<String, List<String>> headerFields = connection.getHeaderFields();
+            List<String> cookiesHeader = headerFields.get(COOKIES_HEADER);
+            if (cookiesHeader != null) {
+                for (String cookie : cookiesHeader) {
+                    msCookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+                }
+            }
+            if (msCookieManager.getCookieStore().getCookies().size() > 0) {
+                List<HttpCookie> cookies = msCookieManager.getCookieStore().getCookies();
+                if (cookies != null) {
+                    for (HttpCookie cookie : cookies) {
+                        Utility.setSharedPrefStringData(mContext, Constants.LOGIN_SESSION_ID, cookie.getValue());
+                    }
+                }
             }
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();

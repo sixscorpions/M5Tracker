@@ -12,4 +12,5 @@ public class Constants {
     public static int SPLASH_TIME_OUT = 2000;
 
     public static final String APP_PREF = "M5Tracker_Pref";
+    public static final String LOGIN_SESSION_ID = "login_session_id";
 }
