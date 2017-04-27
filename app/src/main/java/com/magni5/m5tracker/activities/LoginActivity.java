@@ -1,5 +1,6 @@
 package com.magni5.m5tracker.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,8 +9,10 @@ import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.asynctask.IAsyncCaller;
 import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
 import com.magni5.m5tracker.models.Model;
+import com.magni5.m5tracker.models.SignInModel;
 import com.magni5.m5tracker.parsers.SignInParser;
 import com.magni5.m5tracker.utils.APIConstants;
+import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 import com.magni5.m5tracker.utils.Validations;
 
@@ -82,5 +85,18 @@ public class LoginActivity extends BaseActivity implements IAsyncCaller {
     @Override
     public void onComplete(Model model) {
 
+        if (model != null) {
+            if (model instanceof SignInModel){
+                SignInModel signInModel = (SignInModel)model;
+                if(signInModel.getStatus() == Constants.SUCCESS){
+                    loginAndNavigation(signInModel);
+                }
+            }
+        }
+    }
+
+    private void loginAndNavigation(SignInModel signInModel) {
+        Intent dashBoardIntent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(dashBoardIntent);
     }
 }

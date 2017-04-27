@@ -5,16 +5,7 @@ package com.magni5.m5tracker.models;
  */
 public class Model {
 
-    private boolean status;
     private String message;
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 
     public String getMessage() {
         return message;
