@@ -1,6 +1,7 @@
 package com.magni5.m5tracker.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,14 +36,18 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
-     * Submit click and api call*/
+     * Submit click and api call
+     */
     @OnClick(R.id.btn_submit)
     void editProfilePicture() {
-        if (Validations.isValidUserOrNot(this,et_user_name,et_password)) {
+        if (Validations.isValidUserOrNot(this, et_user_name, et_password)) {
 //api call
-            Validations.setSnackBar(this,btn_submit,"api call");
+            Validations.setSnackBar(this, btn_submit, "api call");
+            Intent dashBoardIntent = new Intent(this, MainActivity.class);
+            startActivity(dashBoardIntent);
         }
     }
+
     /**
      * initialize and set typefaces
      * setting data

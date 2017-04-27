@@ -3,11 +3,13 @@
     <color name="fill_color">#6600FFFF</color>
     <color name="stroke_color">#BB00FFFF</color>
     <color name="colorPrimary">#0181CC</color>
-    <color name="colorPrimaryDark">#0181CC</color>
+    <color name="colorPrimaryDark">#1c477c</color>
     <color name="transparent">#00000000</color>
     <color name="colorAccent">#0181CC</color>
     <color name="black_color">#000000</color>
     <color name="error_color">#ff0000</color>
+    <color name="logut_btn_color">#4d80bf</color>
+    <color name="logut_no_btn_color">#f0603c</color>
     <color name="white">#FFFFFF</color>
     <color name="white_opacity">#99FFFFFF</color>
     <color name="green">#4DC42A</color>
@@ -50,4 +52,6 @@
 
     <color name="error_alert">#FFCCCC</color>
 
+    <color name="dark_slate_blue">#1c4654</color>
+    <color name="home_type_blue_bg">#009acd</color>
 </resources>

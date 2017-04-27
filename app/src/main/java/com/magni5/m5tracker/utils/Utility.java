@@ -164,4 +164,19 @@ public class Utility {
         fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commit();
     }
+
+    /**
+     * GET Resources String
+     *
+     * @param context Context of the class
+     * @param id      Id of the resource
+     * @return String
+     */
+    public static String getResourcesString(Context context, int id) {
+        String value = null;
+        if (context != null && id != -1) {
+            value = context.getResources().getString(id);
+        }
+        return value;
+    }
 }
