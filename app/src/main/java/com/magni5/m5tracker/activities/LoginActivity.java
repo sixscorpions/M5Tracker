@@ -16,6 +16,9 @@ import com.magni5.m5tracker.utils.Validations;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,17 +64,17 @@ public class LoginActivity extends BaseActivity implements IAsyncCaller {
      */
     private void signInApiCall(String mUserName, String mPassword) {
 
-        JSONObject jsonParam = new JSONObject();
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
         try {
-            jsonParam.put("email", mUserName);
-            jsonParam.put("password", mPassword);
+            linkedHashMap.put("email", mUserName);
+            linkedHashMap.put("password", mPassword);
             SignInParser mSignInParser = new SignInParser();
             ServerJSONAsyncTask serverJSONAsyncTask = new ServerJSONAsyncTask(
                     this, Utility.getResourcesString(this, R.string.please_wait), true,
-                    APIConstants.SIGN_IN, jsonParam,
+                    APIConstants.SIGN_IN, linkedHashMap,
                     APIConstants.REQUEST_TYPE.POST, this, mSignInParser);
             Utility.execute(serverJSONAsyncTask);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

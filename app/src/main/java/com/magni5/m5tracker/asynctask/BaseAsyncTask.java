@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 
 /**
@@ -27,13 +28,13 @@ public abstract class BaseAsyncTask extends AsyncTask<Void, Void, Integer> {
     protected String mDialogMessage, mApiMessage;
     protected boolean mShowDialog;
 
-    protected JSONObject mParams;
+    protected LinkedHashMap<String, String> mParams;
     protected APIConstants.REQUEST_TYPE mRequestType;
     protected IAsyncCaller caller;
     protected String mUrl;
     @SuppressWarnings("rawtypes")
     protected Parser parser;
-    protected HashMap<String, File> mFileMap;
+    protected LinkedHashMap<String, File> mFileMap;
     protected LayoutInflater mLayoutInflater;
     protected File file;
     protected String tag;
@@ -44,19 +45,19 @@ public abstract class BaseAsyncTask extends AsyncTask<Void, Void, Integer> {
      * @param dialogMessage , Dialog message for progress dialog
      * @param showDialog    , boolean varialble to show progress dialog or not
      * @param url           , Url of the web service
-     * @param mParamMap     , HashMap of keys
+     * @param mParams     , HashMap of keys
      * @param requestType   , Type of request(GET/POST)
      * @param caller        , Caller activity which will recieve response
      * @param parser        , JSON parser for the response
      */
     public BaseAsyncTask(Context context, String dialogMessage,
-                         boolean showDialog, String url, JSONObject mParamMap,
+                         boolean showDialog, String url, LinkedHashMap<String, String> mParams,
                          APIConstants.REQUEST_TYPE requestType, IAsyncCaller caller, Parser parser) {
 
         this.mContext = context;
         this.mDialogMessage = dialogMessage;
         mShowDialog = showDialog;
-        mParams = mParamMap;
+        this.mParams = mParams;
         mRequestType = requestType;
         this.caller = caller;
         this.mUrl = url;
@@ -65,13 +66,13 @@ public abstract class BaseAsyncTask extends AsyncTask<Void, Void, Integer> {
     }
 
     public BaseAsyncTask(Context context, String dialogMessage,
-                         boolean showDialog, String url, JSONObject mParamMap,
+                         boolean showDialog, String url, LinkedHashMap<String, String> mParams,
                          APIConstants.REQUEST_TYPE requestType, IAsyncCaller caller, Parser parser, String tag, File file, ArrayList<File> mFiles) {
 
         this.mContext = context;
         this.mDialogMessage = dialogMessage;
         mShowDialog = showDialog;
-        mParams = mParamMap;
+        this.mParams = mParams;
         mRequestType = requestType;
         this.caller = caller;
         this.mUrl = url;

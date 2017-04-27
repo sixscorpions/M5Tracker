@@ -26,6 +26,9 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by ShankarRao on 3/28/2016.
@@ -36,17 +39,17 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
     private int CONNECTION_TIME_OUT = 8000;
 
     public ServerJSONAsyncTask(Context context, String dialogMessage,
-                               boolean showDialog, String url, JSONObject mParamMap,
+                               boolean showDialog, String url, LinkedHashMap<String, String> mParams,
                                APIConstants.REQUEST_TYPE requestType, IAsyncCaller caller, Parser parser) {
-        super(context, dialogMessage, showDialog, url, mParamMap, requestType,
+        super(context, dialogMessage, showDialog, url, mParams, requestType,
                 caller, parser);
 
     }
 
     public ServerJSONAsyncTask(Context context, String dialogMessage,
-                               boolean showDialog, String url, JSONObject mParamMap,
+                               boolean showDialog, String url, LinkedHashMap<String, String> mParams,
                                APIConstants.REQUEST_TYPE requestType, IAsyncCaller caller, Parser parser, String tag, File file, ArrayList<File> mFiles) {
-        super(context, dialogMessage, showDialog, url, mParamMap, requestType,
+        super(context, dialogMessage, showDialog, url, mParams, requestType,
                 caller, parser, tag, file, mFiles);
 
     }
@@ -111,7 +114,7 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
                     Utility.showToastMessage(mContext, "Server response error!");
                 }
             } else if (result == 0) {
-                Utility.showToastMessage(mContext,mContext.getResources().getString(
+                Utility.showToastMessage(mContext, mContext.getResources().getString(
                         R.string.no_internet_msg));
                 /*Utility.showSettingDialog(
                         mContext,
@@ -173,8 +176,8 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
                 connection.setRequestProperty(HEADER_MAP.keyAt(i), HEADER_MAP.valueAt(i));
             }*/
             }
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
             connection.setUseCaches(false);
         } catch (Exception e) {
             e.printStackTrace();
@@ -187,7 +190,12 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
                 Utility.showLog("param1", "" + param1);
                 OutputStream os = connection.getOutputStream();
                 Writer writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-                writer.write(param1);
+                if (mUrl.contains(APIConstants.SIGN_IN)) {
+                    Utility.showLog("mParams", "" + getURL(mParams));
+                    writer.write(getURL(mParams));
+                } else {
+                    writer.write(param1);
+                }
                 /*
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
                 writer.write(URLEncoder.encode(param1));*/
@@ -296,6 +304,25 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
         return result;
     }
 
+    public static String getURL(LinkedHashMap<String, String> paramMap) {
+        StringBuilder sb = new StringBuilder().append("");
+        boolean first = true;
+        if (paramMap != null && paramMap.size() > 0) {
+            sb.append("");
+            for (Map.Entry<String, String> entry : paramMap.entrySet()) {
+                if (first) {
+                    sb.append(entry.getKey()).append("=")
+                            .append(entry.getValue());
+                    first = false;
+                } else {
+                    sb.append("&").append(entry.getKey()).append("=")
+                            .append(entry.getValue());
+                }
+
+            }
+        }
+        return sb.toString();
+    }
 
 }
 
