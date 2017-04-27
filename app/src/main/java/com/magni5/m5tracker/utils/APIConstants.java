@@ -18,7 +18,7 @@ public class APIConstants {
         GET, POST, MULTIPART_GET, MULTIPART_POST, DELETE, PUT, PATCH
     }
 
-
-
+    public static String BASE_URL = "http://m5tracker.com/api";
+    public static String SIGNIN = BASE_URL  + "/user/login";
 
 }

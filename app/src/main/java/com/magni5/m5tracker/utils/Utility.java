@@ -1,10 +1,12 @@
 package com.magni5.m5tracker.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -179,4 +181,23 @@ public class Utility {
         }
         return value;
     }
+
+    /**
+     * To Exicute parser
+     * */
+    public static <P, T extends AsyncTask<P, ?, ?>> void execute(T task) {
+        execute(task, (P[]) null);
+    }
+
+    @SafeVarargs
+    @SuppressLint("NewApi")
+    public static <P, T extends AsyncTask<P, ?, ?>> void execute(T task,
+                                                                 P... params) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
+        } else {
+            task.execute(params);
+        }
+    }
 }
+
