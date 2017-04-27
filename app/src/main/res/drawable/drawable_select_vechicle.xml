@@ -4,9 +4,4 @@
     <corners android:radius="@dimen/_20dp" />
 
     <solid android:color="@color/twitter_bg" />
-    <padding
-        android:bottom="13dp"
-        android:left="@dimen/_22dp"
-        android:right="@dimen/_22dp"
-        android:top="@dimen/_13dp" />
 </shape>

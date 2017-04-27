@@ -45,15 +45,23 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="matchWidth" parent="match">
+    <!-- Base Layout theme. -->
+    <style name="match_style">
+        <!-- Customize your theme here. -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+
+    <!-- Width Match Parent theme. -->
+    <style name="match_wrap_style">
+        <!-- Customize your theme here. -->
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="matchHeight" parent="match">
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="wrap">
+    <style name="wrap_style">
+        <!-- Customize your theme here. -->
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

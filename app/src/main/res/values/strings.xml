@@ -18,4 +18,6 @@
     <string name="yes_str">YES</string>
     <string name="are_you_sure_you_want_to_logout">Are you sure, you want to logout?</string>
     <string name="please_wait">Please wait</string>
+    <string name="live_tracking_details">Live Tracking Details</string>
+    <string name="select_vehicles">Select Vehicles</string>
 </resources>

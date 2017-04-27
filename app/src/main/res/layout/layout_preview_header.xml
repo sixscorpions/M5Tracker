@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_5dp">
+
+    <TextView
+        android:id="@+id/tv_live_tracking_details_header"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/_5dp"
+        android:text="@string/live_tracking_details"
+        android:textSize="20sp" />
+</LinearLayout>
