@@ -78,29 +78,7 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
             case POST:
             case DELETE:
             case PATCH:
-                if (file != null) {
-                    try {
-                        MultipartUtility multipartUtility = new MultipartUtility(mUrl, "UTF-8");
-                        multipartUtility.addFilePart(Constants.IMAGES_FOLDER + file.getName(), file);
-                        mResponse = multipartUtility.finish();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (mFiles != null && mFiles.size() > 0) {
-                    try {
-                        MultipartUtility multipartUtility = new MultipartUtility(mUrl, "UTF-8");
-                        for (File mItemFile : mFiles) {
-                            multipartUtility.addFilePart(Constants.IMAGES_FOLDER + mItemFile.getName(), mItemFile);
-                        }
-                        mResponse = multipartUtility.finish();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    mResponse = requestToServer();
-                }
+                mResponse = requestToServer();
                 return parseResponse(mResponse);
             default:
                 return -1;
@@ -182,6 +160,9 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
             }
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
+            if (!Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mContext, Constants.LOGIN_SESSION_ID))) {
+                connection.setRequestProperty("Cookie", "_at=" + Utility.getSharedPrefStringData(mContext, Constants.LOGIN_SESSION_ID));
+            }
             connection.setUseCaches(false);
         } catch (Exception e) {
             e.printStackTrace();

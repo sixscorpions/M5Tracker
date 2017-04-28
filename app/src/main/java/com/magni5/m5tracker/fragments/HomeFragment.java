@@ -10,6 +10,14 @@ import android.widget.TextView;
 
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
+import com.magni5.m5tracker.asynctask.IAsyncCaller;
+import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
+import com.magni5.m5tracker.models.Model;
+import com.magni5.m5tracker.parsers.VehicleListParser;
+import com.magni5.m5tracker.utils.APIConstants;
+import com.magni5.m5tracker.utils.Utility;
+
+import java.util.LinkedHashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements IAsyncCaller {
     public static final String TAG = "HomeFragment";
     private MainActivity mParent;
     private View rootView;
@@ -48,6 +56,20 @@ public class HomeFragment extends Fragment {
     }
 
     private void getVehiclesData() {
+        try {
+            VehicleListParser mVehicleListParser = new VehicleListParser();
+            ServerJSONAsyncTask serverJSONAsyncTask = new ServerJSONAsyncTask(
+                    mParent, Utility.getResourcesString(mParent, R.string.please_wait), true,
+                    APIConstants.VEHICLE_DETAILS, null,
+                    APIConstants.REQUEST_TYPE.GET, this, mVehicleListParser);
+            Utility.execute(serverJSONAsyncTask);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onComplete(Model model) {
 
     }
 }

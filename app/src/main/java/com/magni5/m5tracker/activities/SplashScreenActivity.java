@@ -24,7 +24,11 @@ public class SplashScreenActivity extends BaseActivity {
             @Override
             public void run() {
                 Intent intent;
-                intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                if (!Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(SplashScreenActivity.this, Constants.LOGIN_SESSION_ID))) {
+                    intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                } else {
+                    intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                }
                 startActivity(intent);
                 finish();
             }
