@@ -13,6 +13,7 @@ public class VehicleModel {
     private String OwnerId;
     private String DisplayName;
     private String _id;
+    private boolean isChecked;
 
     public String getRegNumber() {
         return RegNumber;
@@ -76,5 +77,17 @@ public class VehicleModel {
 
     public void set_id(String _id) {
         this._id = _id;
+    }
+
+    public boolean isServicingNeeded() {
+        return ServicingNeeded;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

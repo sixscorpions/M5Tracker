@@ -20,4 +20,7 @@
     <string name="please_wait">Please wait</string>
     <string name="live_tracking_details">Live Tracking Details</string>
     <string name="select_vehicles">Select Vehicles</string>
+
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="select">Select</string>
 </resources>

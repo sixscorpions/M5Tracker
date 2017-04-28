@@ -54,4 +54,6 @@
 
     <color name="dark_slate_blue">#1c4654</color>
     <color name="home_type_blue_bg">#009acd</color>
+
+    <color name="search_result_gradient_black">#BF000000</color>
 </resources>

@@ -25,7 +25,7 @@ public class VehicleListParser implements Parser<Model> {
                 mVehicleListModel.setStatus(jsonObject.optInt("Status"));
             if (jsonObject.has("Message"))
                 mVehicleListModel.setMessage(jsonObject.optString("Message"));
-            if (jsonObject.has("Data") && jsonObject.optJSONObject("Data") != null) {
+            if (jsonObject.has("Data") && jsonObject.optJSONArray("Data") != null) {
                 JSONArray jsonArray = jsonObject.optJSONArray("Data");
                 ArrayList<VehicleModel> vehicleModelArrayList = new ArrayList<>();
                 ArrayList<TrackerModel> trackerModelArrayList = new ArrayList<>();
@@ -40,6 +40,7 @@ public class VehicleListParser implements Parser<Model> {
                     vehicleModel.setLastServicedDate(mVehicleItemJson.optString("LastServicedDate"));
                     vehicleModel.setOwnerId(mVehicleItemJson.optString("OwnerId"));
                     vehicleModel.setDisplayName(mVehicleItemJson.optString("DisplayName"));
+                    vehicleModel.setChecked(true);
                     vehicleModelArrayList.add(vehicleModel);
                     JSONObject mTrackerItemJson = itemJson.optJSONObject("Tracker");
                     TrackerModel trackerModel = new TrackerModel();

@@ -147,4 +147,7 @@
     <dimen name="_100sp">100sp</dimen>
 
 
+    <dimen name="_1px">1px</dimen>
+    <dimen name="_2px">2px</dimen>
+
 </resources>
