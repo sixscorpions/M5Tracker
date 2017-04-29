@@ -149,5 +149,6 @@
 
     <dimen name="_1px">1px</dimen>
     <dimen name="_2px">2px</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

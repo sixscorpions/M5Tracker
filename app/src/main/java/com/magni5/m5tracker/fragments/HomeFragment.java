@@ -5,27 +5,36 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
 import com.magni5.m5tracker.adapter.SelectVehicleAdapter;
 import com.magni5.m5tracker.asynctask.IAsyncCaller;
 import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
+import com.magni5.m5tracker.models.LatLagListModel;
 import com.magni5.m5tracker.models.LocationSpeedModel;
 import com.magni5.m5tracker.models.Model;
 import com.magni5.m5tracker.models.VehicleListModel;
 import com.magni5.m5tracker.models.VehicleModel;
+import com.magni5.m5tracker.parsers.LatLngListParser;
 import com.magni5.m5tracker.parsers.LocationSpeedParser;
 import com.magni5.m5tracker.parsers.VehicleListParser;
 import com.magni5.m5tracker.utils.APIConstants;
@@ -40,7 +49,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements IAsyncCaller {
+public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     public static final String TAG = "HomeFragment";
     private MainActivity mParent;
     private View rootView;
@@ -48,15 +57,16 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
     private VehicleListModel vehicleListModel;
     public static ArrayList<VehicleModel> vehicleModelArrayList;
     private ArrayList<LocationSpeedModel> locationSpeedModelArrayList;
+    private ArrayList<LatLagListModel> locationLatLagListModels;
 
-    @BindView(R.id.tv_live_tracking_details_header)
-    TextView tvLiveTrackingDetailsHeader;
+    @BindView(R.id.fab_select_car)
+    FloatingActionButton fabSelectCar;
+    @BindView(R.id.fab_details)
+    FloatingActionButton fabDetails;
 
-    @BindView(R.id.btn_select_vehicles)
-    Button btn_select_vehicles;
-
-    @BindView(R.id.ll_tackers_detail_list)
-    LinearLayout ll_tackers_detail_list;
+    private GoogleMap mMap;
+    private SupportMapFragment supportMapFragment;
+    private float mZoomLevel = 11.5f;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +77,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = inflater.inflate(R.layout.fragment_home_new, container, false);
         ButterKnife.bind(this, rootView);
         initUI();
         return rootView;
@@ -77,7 +87,15 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
      * Initialize the ui and sets the type face and Find the listeners
      */
     private void initUI() {
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
+        supportMapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+        supportMapFragment = SupportMapFragment.newInstance();
+        fragmentManager.beginTransaction().replace(R.id.map, supportMapFragment).commit();
+        supportMapFragment.getMapAsync(this);
+
         locationSpeedModelArrayList = new ArrayList<>();
+        locationLatLagListModels = new ArrayList<>();
         getVehiclesData();
     }
 
@@ -101,16 +119,53 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
                 vehicleListModel = (VehicleListModel) model;
                 vehicleModelArrayList = vehicleListModel.getVehicleModelArrayList();
                 getTrackersData();
+                getTrackerPathsData();
             } else if (model instanceof LocationSpeedModel) {
                 locationSpeedModelArrayList.add((LocationSpeedModel) model);
-                setDataToTheLayout();
+                //setDataToTheLayout();
+            } else if (model instanceof LatLagListModel) {
+                locationLatLagListModels.add((LatLagListModel) model);
+                LatLagListModel latLagListModel = (LatLagListModel) model;
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLagListModel.getLatLng()));
+                setPathsData();
             }
         } else {
             Utility.showToastMessage(mParent, Utility.getResourcesString(mParent, R.string.something_went_wrong));
         }
     }
 
-    private void setDataToTheLayout() {
+    private void setPathsData() {
+        if (locationLatLagListModels != null && locationLatLagListModels.size() > 0) {
+            for (int i = 0; i < locationLatLagListModels.size(); i++) {
+                mMap.addPolyline(locationLatLagListModels.get(i).getPolylineOptions());
+            }
+        }
+    }
+
+    private void getTrackerPathsData() {
+        for (int i = 0; i < vehicleListModel.getTrackerModelArrayList().size(); i++) {
+            getPathsData(vehicleListModel.getTrackerModelArrayList().get(i).get_id());
+        }
+    }
+
+    @OnClick(R.id.fab_details)
+     void setDataToTheLayout() {
+        final Dialog mDialog = new Dialog(mParent);
+        mDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setContentView(R.layout.layout_alert_dialog_map_details);
+        mDialog.getWindow().setGravity(Gravity.CENTER);
+        mDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setCancelable(true);
+
+        TextView tv_title = (TextView) mDialog.findViewById(R.id.tv_live_tracking_details);
+        tv_title.setBackgroundColor(Utility.getColor(mParent, R.color.home_type_blue_bg));
+        tv_title.setText(Utility.getResourcesString(mParent, R.string.live_tracking_details));
+        tv_title.setTextColor(Utility.getColor(mParent, R.color.white));
+
+        LinearLayout ll_tackers_detail_list = (LinearLayout) mDialog.findViewById(R.id.ll_tackers_detail_list);
         ll_tackers_detail_list.removeAllViews();
         if (locationSpeedModelArrayList != null && locationSpeedModelArrayList.size() > 0) {
             for (int i = 0; i < locationSpeedModelArrayList.size(); i++) {
@@ -143,15 +198,13 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
                     @Override
                     public void onClick(View view) {
                         int position = (int) view.getTag();
-
                     }
                 });
 
                 LocationSpeedModel locationSpeedModel = locationSpeedModelArrayList.get(i);
                 for (int j = 0; j < vehicleListModel.getVehicleModelArrayList().size(); j++) {
                     if (locationSpeedModel.getTrackerId().equalsIgnoreCase(vehicleListModel.getTrackerModelArrayList().get(j).get_id())) {
-                        tv_vehicle_value.setText("" + vehicleListModel.getVehicleModelArrayList().get(j).getDisplayName() + "("
-                                + vehicleListModel.getVehicleModelArrayList().get(j).getRegNumber() + ")");
+                        tv_vehicle_value.setText("" + vehicleListModel.getVehicleModelArrayList().get(j).getDisplayName());
                     }
                 }
                 tv_speed_value.setText("" + locationSpeedModel.getSpeed());
@@ -164,6 +217,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
                 ll_tackers_detail_list.addView(itemList);
             }
         }
+        mDialog.show();
     }
 
     private void getTrackersData() {
@@ -185,7 +239,20 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
         }
     }
 
-    @OnClick(R.id.btn_select_vehicles)
+    private void getPathsData(String id) {
+        try {
+            LatLngListParser mLatLngListParser = new LatLngListParser();
+            ServerJSONAsyncTask serverJSONAsyncTask = new ServerJSONAsyncTask(
+                    mParent, Utility.getResourcesString(mParent, R.string.please_wait), true,
+                    APIConstants.VEHICLES_PATHS + id, null,
+                    APIConstants.REQUEST_TYPE.GET, this, mLatLngListParser);
+            Utility.execute(serverJSONAsyncTask);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @OnClick(R.id.fab_select_car)
     public void navigateToPreVerification() {
 
         final Dialog mDialog = new Dialog(mParent);
@@ -194,8 +261,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
         mDialog.setContentView(R.layout.layout_alert_dialog_title);
         mDialog.getWindow().setGravity(Gravity.CENTER);
         mDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        mDialog.getWindow().setBackgroundDrawable(new
-                ColorDrawable(Color.TRANSPARENT));
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialog.setCanceledOnTouchOutside(false);
         mDialog.setCancelable(true);
 
@@ -227,5 +293,17 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
             }
         });
         mDialog.show();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
+        mMap.setMaxZoomPreference(14.0f);
     }
 }
