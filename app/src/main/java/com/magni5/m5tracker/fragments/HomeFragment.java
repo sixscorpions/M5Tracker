@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -177,6 +178,13 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         tv_title.setText(Utility.getResourcesString(mParent, R.string.live_tracking_details));
         tv_title.setTextColor(Utility.getColor(mParent, R.color.white));
 
+        ImageView img_close = (ImageView) mDialog.findViewById(R.id.img_close);
+        img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog.dismiss();
+            }
+        });
         LinearLayout ll_tackers_detail_list = (LinearLayout) mDialog.findViewById(R.id.ll_tackers_detail_list);
         ll_tackers_detail_list.removeAllViews();
         if (locationSpeedModelArrayList != null && locationSpeedModelArrayList.size() > 0) {

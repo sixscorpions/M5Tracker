@@ -7,16 +7,30 @@
     android:minHeight="@dimen/_50dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_live_tracking_details"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minHeight="@dimen/_40dp"
-        android:text="@string/live_tracking_details"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/_18sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_live_tracking_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/_40dp"
+            android:text="@string/live_tracking_details"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/_4dp"
+            android:src="@drawable/ic_close_black_24dp" />
+    </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
