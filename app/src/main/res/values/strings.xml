@@ -23,4 +23,13 @@
 
     <string name="something_went_wrong">Something went wrong</string>
     <string name="select">Select</string>
+
+
+    <string name="vehicle">Vehicle</string>
+    <string name="speed">Speed</string>
+    <string name="distance_travelled">Distance Travelled</string>
+    <string name="running">Running</string>
+    <string name="time">Time</string>
+    <string name="ignition">Ignition</string>
+    <string name="signal">Signal</string>
 </resources>

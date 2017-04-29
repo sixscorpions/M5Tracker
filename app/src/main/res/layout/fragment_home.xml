@@ -84,14 +84,11 @@
                         android:textSize="@dimen/_15sp" />
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/properties_recycler_view"
+                <LinearLayout
+                    android:id="@+id/ll_tackers_detail_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/_45dp"
-                    android:background="@android:color/white"
-                    android:scrollbars="vertical"
-                    android:visibility="visible" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

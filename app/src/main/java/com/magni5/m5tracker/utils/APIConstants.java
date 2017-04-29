@@ -20,5 +20,6 @@ public class APIConstants {
     public static String BASE_URL = "http://m5tracker.com/api";
     public static String SIGN_IN = BASE_URL + "/user/login";
     public static String VEHICLE_DETAILS = BASE_URL + "/vehicle/detail";
+    public static String LOCATIONS = BASE_URL + "/tracker/location/";
 
 }

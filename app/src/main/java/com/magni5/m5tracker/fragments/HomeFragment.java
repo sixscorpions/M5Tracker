@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,9 +22,11 @@ import com.magni5.m5tracker.activities.MainActivity;
 import com.magni5.m5tracker.adapter.SelectVehicleAdapter;
 import com.magni5.m5tracker.asynctask.IAsyncCaller;
 import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
+import com.magni5.m5tracker.models.LocationSpeedModel;
 import com.magni5.m5tracker.models.Model;
 import com.magni5.m5tracker.models.VehicleListModel;
 import com.magni5.m5tracker.models.VehicleModel;
+import com.magni5.m5tracker.parsers.LocationSpeedParser;
 import com.magni5.m5tracker.parsers.VehicleListParser;
 import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Utility;
@@ -44,12 +47,16 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
 
     private VehicleListModel vehicleListModel;
     public static ArrayList<VehicleModel> vehicleModelArrayList;
+    private ArrayList<LocationSpeedModel> locationSpeedModelArrayList;
 
     @BindView(R.id.tv_live_tracking_details_header)
     TextView tvLiveTrackingDetailsHeader;
 
     @BindView(R.id.btn_select_vehicles)
     Button btn_select_vehicles;
+
+    @BindView(R.id.ll_tackers_detail_list)
+    LinearLayout ll_tackers_detail_list;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +77,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
      * Initialize the ui and sets the type face and Find the listeners
      */
     private void initUI() {
+        locationSpeedModelArrayList = new ArrayList<>();
         getVehiclesData();
     }
 
@@ -92,9 +100,77 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
             if (model instanceof VehicleListModel) {
                 vehicleListModel = (VehicleListModel) model;
                 vehicleModelArrayList = vehicleListModel.getVehicleModelArrayList();
+                getTrackersData();
+            } else if (model instanceof LocationSpeedModel) {
+                locationSpeedModelArrayList.add((LocationSpeedModel) model);
+                setDataToTheLayout();
             }
         } else {
             Utility.showToastMessage(mParent, Utility.getResourcesString(mParent, R.string.something_went_wrong));
+        }
+    }
+
+    private void setDataToTheLayout() {
+        ll_tackers_detail_list.removeAllViews();
+        if (locationSpeedModelArrayList != null && locationSpeedModelArrayList.size() > 0) {
+            for (int i = 0; i < locationSpeedModelArrayList.size(); i++) {
+                LinearLayout itemList = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.tracker_list_item, null);
+
+                TextView tv_vehicle = (TextView) itemList.findViewById(R.id.tv_vehicle);
+                TextView tv_vehicle_value = (TextView) itemList.findViewById(R.id.tv_vehicle_value);
+
+                TextView tv_speed = (TextView) itemList.findViewById(R.id.tv_speed);
+                TextView tv_speed_value = (TextView) itemList.findViewById(R.id.tv_speed_value);
+
+                TextView tv_distance_travelled = (TextView) itemList.findViewById(R.id.tv_distance_travelled);
+                TextView tv_distance_travelled_value = (TextView) itemList.findViewById(R.id.tv_distance_travelled_value);
+
+                TextView tv_running = (TextView) itemList.findViewById(R.id.tv_running);
+                TextView tv_running_value = (TextView) itemList.findViewById(R.id.tv_running_value);
+
+                TextView tv_time = (TextView) itemList.findViewById(R.id.tv_time);
+                TextView tv_time_value = (TextView) itemList.findViewById(R.id.tv_time_value);
+
+                TextView tv_ignition = (TextView) itemList.findViewById(R.id.tv_ignition);
+                TextView tv_ignition_value = (TextView) itemList.findViewById(R.id.tv_ignition_value);
+
+                TextView tv_signal = (TextView) itemList.findViewById(R.id.tv_signal);
+                TextView tv_signal_value = (TextView) itemList.findViewById(R.id.tv_signal_value);
+
+                LocationSpeedModel locationSpeedModel = locationSpeedModelArrayList.get(i);
+                for (int j = 0; j < vehicleListModel.getVehicleModelArrayList().size(); j++) {
+                    if (locationSpeedModel.getTrackerId().equalsIgnoreCase(vehicleListModel.getTrackerModelArrayList().get(j).get_id())) {
+                        tv_vehicle_value.setText("" + vehicleListModel.getVehicleModelArrayList().get(j).getRegNumber());
+                    }
+                }
+                tv_speed_value.setText("" + locationSpeedModel.getSpeed());
+                tv_distance_travelled_value.setText("Pending from API");
+                tv_running_value.setText("Pending from API");
+                tv_time_value.setText("" + locationSpeedModel.getEventDateTime());
+                tv_ignition_value.setText("" + locationSpeedModel.getIgnition());
+                tv_signal_value.setText("" + locationSpeedModel.getSignal());
+
+                ll_tackers_detail_list.addView(itemList);
+            }
+        }
+    }
+
+    private void getTrackersData() {
+        for (int i = 0; i < vehicleListModel.getTrackerModelArrayList().size(); i++) {
+            getLocationsData(vehicleListModel.getTrackerModelArrayList().get(i).get_id());
+        }
+    }
+
+    private void getLocationsData(String id) {
+        try {
+            LocationSpeedParser mLocationSpeedParser = new LocationSpeedParser();
+            ServerJSONAsyncTask serverJSONAsyncTask = new ServerJSONAsyncTask(
+                    mParent, Utility.getResourcesString(mParent, R.string.please_wait), true,
+                    APIConstants.LOCATIONS + id, null,
+                    APIConstants.REQUEST_TYPE.GET, this, mLocationSpeedParser);
+            Utility.execute(serverJSONAsyncTask);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
