@@ -14,4 +14,5 @@ public class Constants {
     public static final String APP_PREF = "M5Tracker_Pref";
     public static final String LOGIN_SESSION_ID = "login_session_id";
     public static int SUCCESS = 1;
+    public static int MY_PERMISSIONS_REQUEST_LOCATION = 1;
 }

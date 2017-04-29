@@ -43,6 +43,13 @@ public class Utility {
         return isValue;
     }
 
+    /**
+     * TO CHECK IS IT BELOW MARSHMALLOW OR NOT
+     */
+    public static boolean isMarshmallowOS() {
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
     public static boolean isNetworkAvailable(Context context) {
         try {
             ConnectivityManager connMgr = (ConnectivityManager) context

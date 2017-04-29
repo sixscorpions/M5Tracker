@@ -1,11 +1,16 @@
 package com.magni5.m5tracker.activities;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +27,7 @@ import android.widget.TextView;
 
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.fragments.HomeFragment;
+import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +60,23 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         initNavigationDrawer();
+        askPermissions();
+    }
+
+    /*Open Gallery to select multiple images*/
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    private void askPermissions() {
+        if (Utility.isMarshmallowOS()) {
+            PackageManager pm = this.getPackageManager();
+            int hasPerm = pm.checkPermission(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    this.getPackageName());
+            if (hasPerm != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        Constants.MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+        }
     }
 
     private void initNavigationDrawer() {
@@ -125,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         tv_yes.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
+                                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                                 startActivity(loginIntent);
                                 finish();
                             }
