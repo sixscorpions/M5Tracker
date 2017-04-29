@@ -137,10 +137,21 @@ public class HomeFragment extends Fragment implements IAsyncCaller {
                 TextView tv_signal = (TextView) itemList.findViewById(R.id.tv_signal);
                 TextView tv_signal_value = (TextView) itemList.findViewById(R.id.tv_signal_value);
 
+                Button button = (Button) itemList.findViewById(R.id.btn_immobilize);
+                button.setTag(i);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int position = (int) view.getTag();
+
+                    }
+                });
+
                 LocationSpeedModel locationSpeedModel = locationSpeedModelArrayList.get(i);
                 for (int j = 0; j < vehicleListModel.getVehicleModelArrayList().size(); j++) {
                     if (locationSpeedModel.getTrackerId().equalsIgnoreCase(vehicleListModel.getTrackerModelArrayList().get(j).get_id())) {
-                        tv_vehicle_value.setText("" + vehicleListModel.getVehicleModelArrayList().get(j).getRegNumber());
+                        tv_vehicle_value.setText("" + vehicleListModel.getVehicleModelArrayList().get(j).getDisplayName() + "("
+                                + vehicleListModel.getVehicleModelArrayList().get(j).getRegNumber() + ")");
                     }
                 }
                 tv_speed_value.setText("" + locationSpeedModel.getSpeed());

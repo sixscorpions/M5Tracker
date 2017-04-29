@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/_5dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/_5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -186,6 +186,16 @@
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_immobilize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_12dp"
+        android:background="@drawable/drawable_select_vechicle"
+        android:text="@string/immobilize"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_18sp" />
 
     <View
         android:layout_width="match_parent"
