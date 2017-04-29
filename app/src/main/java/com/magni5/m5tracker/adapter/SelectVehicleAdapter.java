@@ -5,15 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.fragments.HomeFragment;
 import com.magni5.m5tracker.models.VehicleModel;
-
-import java.util.ArrayList;
+import com.magni5.m5tracker.utils.Utility;
 
 /**
  * Created by Shankar on 4/28/2017.
@@ -50,7 +48,7 @@ public class SelectVehicleAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mLayoutInflater.inflate(R.layout.select_vehicle_item, null);
             selectVehicleViewHolder = new SelectVehicleViewHolder();
-            selectVehicleViewHolder.checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
+            selectVehicleViewHolder.checkbox = (ImageView) convertView.findViewById(R.id.checkbox);
             selectVehicleViewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
 
             convertView.setTag(selectVehicleViewHolder);
@@ -60,20 +58,21 @@ public class SelectVehicleAdapter extends BaseAdapter {
 
         VehicleModel vehicleModel = HomeFragment.vehicleModelArrayList.get(position);
         if (vehicleModel.isChecked()) {
-            selectVehicleViewHolder.checkbox.setChecked(true);
+            selectVehicleViewHolder.checkbox.setImageDrawable(Utility.getDrawable(context, R.drawable.ic_check_box_black_24dp));
         } else {
-            selectVehicleViewHolder.checkbox.setChecked(false);
+            selectVehicleViewHolder.checkbox.setImageDrawable(Utility.getDrawable(context, R.drawable.ic_check_box_outline_blank_black_24dp));
         }
         selectVehicleViewHolder.tv_title.setText(vehicleModel.getDisplayName() + " " + vehicleModel.getRegNumber());
 
         selectVehicleViewHolder.checkbox.setTag(position);
-        selectVehicleViewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        selectVehicleViewHolder.checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int pos = (int) buttonView.getTag();
+            public void onClick(View view) {
+                int pos = (int) view.getTag();
                 VehicleModel vehicleModel = HomeFragment.vehicleModelArrayList.get(pos);
                 vehicleModel.setChecked(!vehicleModel.isChecked());
                 HomeFragment.vehicleModelArrayList.set(pos, vehicleModel);
+                notifyDataSetChanged();
             }
         });
 
@@ -81,7 +80,7 @@ public class SelectVehicleAdapter extends BaseAdapter {
     }
 
     private class SelectVehicleViewHolder {
-        private CheckBox checkbox;
+        private ImageView checkbox;
         private TextView tv_title;
     }
 }

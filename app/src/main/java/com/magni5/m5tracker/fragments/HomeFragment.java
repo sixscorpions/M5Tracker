@@ -142,6 +142,18 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         }
     }
 
+
+    private void setPathsData(ArrayList<Integer> integers) {
+        if (locationLatLagListModels != null && locationLatLagListModels.size() > 0 && integers != null && integers.size() > 0) {
+            mMap.clear();
+            for (int i = 0; i < locationLatLagListModels.size(); i++) {
+                if (integers.contains(i)) {
+                    mMap.addPolyline(locationLatLagListModels.get(i).getPolylineOptions());
+                }
+            }
+        }
+    }
+
     private void getTrackerPathsData() {
         for (int i = 0; i < vehicleListModel.getTrackerModelArrayList().size(); i++) {
             getPathsData(vehicleListModel.getTrackerModelArrayList().get(i).get_id());
@@ -149,7 +161,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     }
 
     @OnClick(R.id.fab_details)
-     void setDataToTheLayout() {
+    void setDataToTheLayout() {
         final Dialog mDialog = new Dialog(mParent);
         mDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -289,7 +301,9 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                             integers.add(i);
                         }
                     }
+                    setPathsData(integers);
                 }
+                mDialog.dismiss();
             }
         });
         mDialog.show();

@@ -11,10 +11,11 @@
         android:layout_margin="@dimen/_15dp"
         android:orientation="horizontal">
 
-        <CheckBox
+        <ImageView
             android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_check_box_black_24dp" />
 
         <TextView
             android:id="@+id/tv_title"
