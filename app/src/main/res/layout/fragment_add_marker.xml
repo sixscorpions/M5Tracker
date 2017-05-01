@@ -18,19 +18,15 @@
         android:layout_marginRight="@dimen/_10dp"
         android:background="@color/search_result_gradient_black" />
 
-    <EditText
-        android:id="@+id/edt_search"
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10dp"
-        android:layout_marginRight="@dimen/_10dp"
-        android:drawableEnd="@drawable/ic_youtube_searched_for_black_24dp"
-        android:drawableRight="@drawable/ic_youtube_searched_for_black_24dp"
-        android:hint="@string/search_location" />
+        android:layout_height="@dimen/_45dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
         <fragment
@@ -45,5 +41,50 @@
             android:layout_height="@dimen/_45dp"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_add_location_black_24dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/_10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edt_add_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/display_name" />
+
+                <Button
+                    android:id="@+id/btn_add_mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:paddingEnd="@dimen/_2dp"
+                    android:paddingLeft="@dimen/_2dp"
+                    android:paddingRight="@dimen/_2dp"
+                    android:paddingStart="@dimen/_2dp"
+                    android:text="@string/add_mark"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_13sp" />
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
+
 </LinearLayout>
