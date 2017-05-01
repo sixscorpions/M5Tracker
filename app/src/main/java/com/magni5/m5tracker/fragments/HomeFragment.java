@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
 
     private VehicleListModel vehicleListModel;
     public static ArrayList<VehicleModel> vehicleModelArrayList;
-    private ArrayList<LocationSpeedModel> locationSpeedModelArrayList;
+    public static ArrayList<LocationSpeedModel> locationSpeedModelArrayList;
     private ArrayList<LatLagListModel> locationLatLagListModels;
 
     @BindView(R.id.fab_select_car)
@@ -78,6 +78,10 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (rootView != null) {
+            return rootView;
+        }
         rootView = inflater.inflate(R.layout.fragment_home_new, container, false);
         ButterKnife.bind(this, rootView);
         initUI();
@@ -89,7 +93,8 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
      */
     private void initUI() {
 
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         supportMapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
         supportMapFragment = SupportMapFragment.newInstance();
         fragmentManager.beginTransaction().replace(R.id.map, supportMapFragment).commit();

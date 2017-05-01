@@ -33,4 +33,7 @@
     <string name="ignition">Ignition</string>
     <string name="signal">Signal</string>
     <string name="immobilize">Immobilize</string>
+
+    <!--Add Markers-->
+    <string name="search_location">Search Location</string>
 </resources>

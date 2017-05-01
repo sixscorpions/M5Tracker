@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10dp"
+        android:layout_marginRight="@dimen/_10dp"
+        android:minHeight="@dimen/_40dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1px"
+        android:layout_marginLeft="@dimen/_10dp"
+        android:layout_marginRight="@dimen/_10dp"
+        android:background="@color/search_result_gradient_black" />
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10dp"
+        android:layout_marginRight="@dimen/_10dp"
+        android:drawableEnd="@drawable/ic_youtube_searched_for_black_24dp"
+        android:drawableRight="@drawable/ic_youtube_searched_for_black_24dp"
+        android:hint="@string/search_location" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <fragment
+            android:id="@+id/map_add_marker"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            style="@style/match_style"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/img_add_marker"
+            android:layout_width="@dimen/_45dp"
+            android:layout_height="@dimen/_45dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_add_location_black_24dp" />
+    </RelativeLayout>
+</LinearLayout>
