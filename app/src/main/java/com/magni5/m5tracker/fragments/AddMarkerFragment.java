@@ -30,10 +30,21 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
+import com.magni5.m5tracker.asynctask.IAsyncCaller;
+import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
+import com.magni5.m5tracker.models.AddMarkModel;
+import com.magni5.m5tracker.models.Model;
+import com.magni5.m5tracker.models.VehicleListModel;
+import com.magni5.m5tracker.parsers.AddMarkParser;
+import com.magni5.m5tracker.parsers.LocationSpeedParser;
+import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Utility;
+import com.magni5.m5tracker.utils.Validations;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +53,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, IAsyncCaller {
 
     public static final String TAG = "AddMarkerFragment";
     private MainActivity mParent;
@@ -69,6 +80,8 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
     @BindView(R.id.edt_add_name)
     EditText edtAddName;
 
+    private String vechicleId = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +91,9 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (rootView != null) {
+            return rootView;
+        }
         rootView = inflater.inflate(R.layout.fragment_add_marker, container, false);
         ButterKnife.bind(this, rootView);
         initUI();
@@ -88,6 +104,37 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
     void showBottomLayout() {
         llBottomLayout.setVisibility(View.VISIBLE);
         tvAddress.setText(getAddressFromLatLng(mAddMarkerMap.getCameraPosition().target));
+    }
+
+    @OnClick(R.id.btn_add_mark)
+    void addMarker() {
+        if (isValidFields()) {
+            LinkedHashMap linkedHashMap = new LinkedHashMap();
+            try {
+                linkedHashMap.put("displayName", URLEncoder.encode(edtAddName.getText().toString(), "UTF-8"));
+                linkedHashMap.put("latitude", "" + mAddMarkerMap.getCameraPosition().target.latitude);
+                linkedHashMap.put("longitude", "" + mAddMarkerMap.getCameraPosition().target.longitude);
+                linkedHashMap.put("vehicleId", "" + vechicleId);
+
+                AddMarkParser mAddMarkParser = new AddMarkParser();
+                ServerJSONAsyncTask serverJSONAsyncTask = new ServerJSONAsyncTask(
+                        mParent, Utility.getResourcesString(mParent, R.string.please_wait), true,
+                        APIConstants.ADD_MARK, linkedHashMap,
+                        APIConstants.REQUEST_TYPE.POST, this, mAddMarkParser);
+                Utility.execute(serverJSONAsyncTask);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean isValidFields() {
+        boolean isValid = true;
+        if (Utility.isValueNullOrEmpty(edtAddName.getText().toString())) {
+            Validations.setSnackBar(mParent, edtAddName, "Please enter display name");
+            isValid = false;
+        }
+        return isValid;
     }
 
     /**
@@ -133,6 +180,7 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mAddMarkerMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLngFromSelection(getTrackerId(HomeFragment.vehicleModelArrayList.get(position).get_id()))));
                 mAddMarkerMap.animateCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
+                vechicleId = HomeFragment.vehicleModelArrayList.get(position).get_id();
             }
 
             @Override
@@ -228,5 +276,18 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
             e.printStackTrace();
         }
         return address;
+    }
+
+    @Override
+    public void onComplete(Model model) {
+        if (model != null) {
+            if (model instanceof AddMarkModel) {
+                AddMarkModel addMarkModel = (AddMarkModel) model;
+                Utility.showToastMessage(mParent, addMarkModel.getMessage());
+                edtAddName.setText("");
+                tvAddress.setText("");
+                llBottomLayout.setVisibility(View.GONE);
+            }
+        }
     }
 }

@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
        /* Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.trash).setVisible(false);*/
+        final AddMarkerFragment mAddMarkerFragment = new AddMarkerFragment();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -121,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
                                             getSupportFragmentManager()
                                                     .getBackStackEntryCount() - 1);
                             String tagName = backEntry.getName();
-                            if (!tagName.equals(AddMarkerFragment.TAG)) {
-                                Utility.navigateDashBoardFragment(new AddMarkerFragment(), AddMarkerFragment.TAG, null, MainActivity.this);
+                            if (!tagName.equals(mAddMarkerFragment.TAG)) {
+                                Utility.navigateDashBoardFragment(mAddMarkerFragment, mAddMarkerFragment.TAG, null, MainActivity.this);
                             }
                         }
                         drawerLayout.closeDrawers();

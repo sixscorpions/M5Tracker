@@ -23,4 +23,6 @@ public class APIConstants {
     public static String LOCATIONS = BASE_URL + "/tracker/location/";
     public static String VEHICLES_PATHS = BASE_URL + "/tracker/location/path/";
 
+    public static String ADD_MARK = BASE_URL + "/userpreference/add/";
+
 }
