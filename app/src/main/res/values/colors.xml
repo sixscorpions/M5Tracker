@@ -56,4 +56,5 @@
     <color name="home_type_blue_bg">#009acd</color>
 
     <color name="search_result_gradient_black">#BF000000</color>
+    <color name="dark_gray_color">#bf292929</color>
 </resources>

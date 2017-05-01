@@ -36,4 +36,32 @@
 
     <!--Add Markers-->
     <string name="search_location">Search Location</string>
+
+    <string name="user_details">User Details</string>
+    <string name="update_password">Update Password</string>
+    <string name="company_details">Company Details</string>
+    <string name="company_address">Company Address</string>
+
+    <!--Setting material icons-->
+    <string name="icon_user_details">&#xE853;</string>
+    <string name="icon_update_password">&#xE923;</string>
+    <string name="icon_company_details">&#xE3C8;</string>
+    <string name="icon_company_address">&#xE567;</string>
+    <string name="display_name">Display name</string>
+    <string name="save">save</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="retype_password">Retype password</string>
+    <string name="vehicle_map_marker_img">Vehicle Map Marker Image</string>
+    <string name="service_alert_distance">Service Alert Distance(KM)</string>
+    <string name="Overspeed_limit">Overspeed Limit</string>
+    <string name="street">Street</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 </resources>

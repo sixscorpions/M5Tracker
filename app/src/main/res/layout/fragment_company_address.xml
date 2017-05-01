@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lly_company_address"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginEnd="@dimen/_10dp"
+        android:layout_marginStart="@dimen/_10dp">
+
+        <EditText
+            android:id="@+id/et_street"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:padding="@dimen/_5dp"
+            android:hint="@string/street" />
+
+        <EditText
+            android:id="@+id/et_city"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:padding="@dimen/_5dp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:hint="@string/city" />
+
+        <EditText
+            android:id="@+id/et_state"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:padding="@dimen/_5dp"
+            android:hint="@string/state" />
+
+        <EditText
+            android:id="@+id/et_country"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:padding="@dimen/_5dp"
+            android:hint="@string/country" />
+
+        <EditText
+            android:id="@+id/et_pin_code"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:padding="@dimen/_5dp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:hint="@string/pin_code" />
+
+        <EditText
+            android:id="@+id/et_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:padding="@dimen/_5dp"
+            android:hint="@string/latitude" />
+
+        <EditText
+            android:id="@+id/et_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:padding="@dimen/_5dp"
+            android:hint="@string/longitude" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_90dp"
+            android:background="@drawable/drawable_login_button"
+            android:textColor="@color/white"
+            android:layout_margin="@dimen/_8dp"
+            android:paddingEnd="@dimen/_90dp"
+            android:text="@string/save"/>
+    </LinearLayout>
+</ScrollView>

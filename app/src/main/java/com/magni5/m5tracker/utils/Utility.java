@@ -3,6 +3,7 @@ package com.magni5.m5tracker.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -222,5 +223,12 @@ public class Utility {
         }
     }
 
+    /**
+     * MATERIAL ICONS REGULAR TYPEFACE
+     * This method is used to set the icons in Material Icons Regular
+     **/
+    public static Typeface getMaterialIconsRegular(Context context) {
+        return Typeface.createFromAsset(context.getAssets(), "fonts/matireal_icons_regular.ttf");
+    }
 }
 
