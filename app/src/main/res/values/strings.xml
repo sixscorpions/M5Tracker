@@ -35,5 +35,6 @@
     <string name="immobilize">Immobilize</string>
 
     <!--Add Markers-->
-    <string name="search_location">Search Location</string>
+    <string name="type_your_location">Type your Location</string>
+    <string name="display_name">Display Name</string>
 </resources>

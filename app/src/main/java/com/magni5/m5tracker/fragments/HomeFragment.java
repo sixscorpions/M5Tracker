@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     private MainActivity mParent;
     private View rootView;
 
-    private VehicleListModel vehicleListModel;
+    public static VehicleListModel vehicleListModel;
     public static ArrayList<VehicleModel> vehicleModelArrayList;
     public static ArrayList<LocationSpeedModel> locationSpeedModelArrayList;
     private ArrayList<LatLagListModel> locationLatLagListModels;
