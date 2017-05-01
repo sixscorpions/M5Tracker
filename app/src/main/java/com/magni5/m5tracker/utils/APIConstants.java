@@ -25,4 +25,7 @@ public class APIConstants {
 
     public static String ADD_MARK = BASE_URL + "/userpreference/add/";
 
+    public static String USER_UPDATE = BASE_URL + "/user/update";
+    public static String PASSWORD_CHANGE = BASE_URL + "/user/password/change";
+    public static String ADDRESS_UPDATE = BASE_URL + "/user/owner/address/update";
 }

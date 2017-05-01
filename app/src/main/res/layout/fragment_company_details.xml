@@ -34,7 +34,7 @@
             android:padding="@dimen/_5dp"
             android:singleLine="true"
             android:maxLines="1"
-            android:hint="@string/Overspeed_limit" />
+            android:hint="@string/overspeed_limit" />
 
         <EditText
             android:id="@+id/et_service_alert_distance"
