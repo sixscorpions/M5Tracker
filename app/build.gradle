@@ -22,6 +22,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        m5tracker {
+            applicationId 'com.m5tracker'
+            versionName '1.0'
+            versionCode 1
+        }
+    }
+
 }
 
 dependencies {
