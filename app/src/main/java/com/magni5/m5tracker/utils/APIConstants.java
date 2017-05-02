@@ -31,5 +31,7 @@ public class APIConstants {
 
     public static String GET_VEHICLES = BASE_URL + "/owner/vehicles";
 
-    public static String VEHICLE_UPDATE = BASE_URL  + "/owner/vehicle/update";
+    public static String VEHICLE_UPDATE = BASE_URL + "/owner/vehicle/update";
+    public static String MARK_SERVCIE = BASE_URL + "/vehicle/";
+    public static String SERVICED = "/serviced";
 }

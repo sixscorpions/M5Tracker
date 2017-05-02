@@ -103,6 +103,22 @@ public class VehicleViewEditFragment extends Fragment implements IAsyncCaller {
         }
     }
 
+    @OnClick(R.id.btn_mark)
+    void onBtnMarkClick() {
+        if (isValid()) {
+            try {
+                MileageUpdateParser mMileageUpdateParser = new MileageUpdateParser();
+                ServerJSONAsyncTask serverJSONAsyncTask = new ServerJSONAsyncTask(
+                        mParent, Utility.getResourcesString(mParent, R.string.please_wait), true,
+                        APIConstants.MARK_SERVCIE + model.get_id() + APIConstants.SERVICED, null,
+                        APIConstants.REQUEST_TYPE.GET, this, mMileageUpdateParser);
+                Utility.execute(serverJSONAsyncTask);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private boolean isValid() {
         boolean isValid = true;
         if (Utility.isValueNullOrEmpty(etAvgMileageLong.getText().toString())) {
