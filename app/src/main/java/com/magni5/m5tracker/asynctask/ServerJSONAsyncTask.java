@@ -175,7 +175,7 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
                 Utility.showLog("param1", "" + param1);
                 OutputStream os = connection.getOutputStream();
                 Writer writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-                if (mUrl.contains(APIConstants.SIGN_IN) || mUrl.contains(APIConstants.ADD_MARK)) {
+                if (mUrl.contains(APIConstants.SIGN_IN) || mUrl.contains(APIConstants.ADD_MARK) || mUrl.contains(APIConstants.VEHICLE_UPDATE)) {
                     Utility.showLog("mParams", "" + getURL(mParams));
                     writer.write(getURL(mParams));
                 } else {

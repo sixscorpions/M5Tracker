@@ -30,4 +30,6 @@ public class APIConstants {
     public static String ADDRESS_UPDATE = BASE_URL + "/user/owner/address/update";
 
     public static String GET_VEHICLES = BASE_URL + "/owner/vehicles";
+
+    public static String VEHICLE_UPDATE = BASE_URL  + "/owner/vehicle/update";
 }
