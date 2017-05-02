@@ -235,7 +235,12 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 tv_distance_travelled_value.setText("Pending from API");
                 tv_running_value.setText("Pending from API");
                 tv_time_value.setText("" + locationSpeedModel.getEventDateTime());
-                tv_ignition_value.setText("" + locationSpeedModel.getIgnition());
+                if (locationSpeedModel.getIgnition() == 1) {
+                    tv_ignition_value.setText("On");
+                } else {
+                    tv_ignition_value.setText("Off");
+                }
+
                 tv_signal_value.setText("" + locationSpeedModel.getSignal());
 
                 ll_tackers_detail_list.addView(itemList);
