@@ -2,11 +2,15 @@ package com.magni5.m5tracker.activities;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -26,12 +30,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.magni5.m5tracker.R;
+import com.magni5.m5tracker.customviews.FilePath;
 import com.magni5.m5tracker.fragments.AddMarkerFragment;
+import com.magni5.m5tracker.fragments.CompanyDetailsFragment;
 import com.magni5.m5tracker.fragments.HomeFragment;
 import com.magni5.m5tracker.fragments.SettingsFragment;
 import com.magni5.m5tracker.fragments.VehiclesFragment;
 import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -227,5 +235,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            Uri selectedImageUri = data.getData();
+            String path = null;
+            Bitmap myBitmap;
+            if (selectedImageUri != null) {
+                path = FilePath.getPath(this, selectedImageUri);
+            }
+            File imgFile = new File(path);
+            if (imgFile.exists()) {
+                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                if (resultCode == Activity.RESULT_OK) {
+                    if (requestCode == Constants.PICK_OF_ID) {
+                        CompanyDetailsFragment.getInstance().getBase64Image(path, myBitmap);
+                    }
+                }
+            }
+        }
     }
 }

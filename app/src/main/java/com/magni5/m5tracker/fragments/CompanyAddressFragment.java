@@ -18,8 +18,10 @@ import com.magni5.m5tracker.asynctask.IAsyncCaller;
 import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
 import com.magni5.m5tracker.models.Model;
 import com.magni5.m5tracker.models.SettingsUpdateModel;
+import com.magni5.m5tracker.models.SignInModel;
 import com.magni5.m5tracker.parsers.SettingsUserDetailsParser;
 import com.magni5.m5tracker.utils.APIConstants;
+import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 
 import java.util.LinkedHashMap;
@@ -44,26 +46,43 @@ public class CompanyAddressFragment extends Fragment implements IAsyncCaller {
     ScrollView scrollView;
     @BindView(R.id.lly_company_address)
     LinearLayout llyCompanyAddress;
-    @BindView(R.id.et_street) EditText etStreet;
-    @BindView(R.id.et_city) EditText etCity;
-    @BindView(R.id.et_state) EditText etState;
-    @BindView(R.id.et_country) EditText etCountry;
-    @BindView(R.id.et_pin_code) EditText etPinCode;
-    @BindView(R.id.et_latitude) EditText etLatitude;
+    @BindView(R.id.et_street)
+    EditText etStreet;
+    @BindView(R.id.et_city)
+    EditText etCity;
+    @BindView(R.id.et_state)
+    EditText etState;
+    @BindView(R.id.et_country)
+    EditText etCountry;
+    @BindView(R.id.et_pin_code)
+    EditText etPinCode;
+    @BindView(R.id.et_latitude)
+    EditText etLatitude;
     @BindView(R.id.et_longitude)
     EditText etLongitude;
     @BindView(R.id.btn_save)
     Button btn_save;
 
+/*    private SignInModel signInModel;*/
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mParent = (MainActivity) getActivity();
+
+        Bundle bundle = getArguments();
+      /*  if (bundle != null) {
+            if (bundle.containsKey(Constants.LOGIN_DATA_MODEL))
+                signInModel = (SignInModel) bundle.getSerializable(Constants.LOGIN_DATA_MODEL);
+        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(rootView!=null){
+            return rootView;
+        }
         rootView = inflater.inflate(R.layout.fragment_company_address, container, false);
         ButterKnife.bind(this, rootView);
         mParent.toolbar.setTitle("Company Address");
@@ -73,11 +92,32 @@ public class CompanyAddressFragment extends Fragment implements IAsyncCaller {
 
     /**
      * To initiate UI
-     * */
+     */
     private void initUI() {
+/*        if (signInModel != null) {*/
+            etCity.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_CITY)) ? "" :
+                    Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_CITY));
+
+            etStreet.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_STREET)) ? "" :
+                    Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_STREET));
+
+        etState.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_STATE)) ? "" :
+                Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_STATE));
+
+        etCountry.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_COUNTRY)) ? "" :
+                Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_COUNTRY));
+
+            etPinCode.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_PIN)) ? "" :
+                    Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_PIN));
+
+            etLatitude.setText("" + Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_LAT));
+
+            etLongitude.setText("" + Utility.getSharedPrefStringData(mParent,Constants.COMPANY_ADDRESS_LANG));
+
     }
 
-    @OnClick(R.id.btn_save) void onBtnSaveClick() {
+    @OnClick(R.id.btn_save)
+    void onBtnSaveClick() {
         userDetailsApiCall();
         //TODO implement
     }
@@ -111,8 +151,18 @@ public class CompanyAddressFragment extends Fragment implements IAsyncCaller {
             if (model instanceof SettingsUpdateModel) {
                 SettingsUpdateModel mSettingsUpdateModel = (SettingsUpdateModel) model;
                 Utility.showToastMessage(mParent, mSettingsUpdateModel.getmMessage());
-                if (mSettingsUpdateModel.getmStatus() == 1)
+                if (mSettingsUpdateModel.getmStatus() == 1){
+                    Utility.setSharedPrefStringData(mParent, Constants.COMPANY_ADDRESS_STREET, etStreet.getText().toString());
+                    Utility.setSharedPrefStringData(mParent, Constants.COMPANY_ADDRESS_CITY, ""+etCity.getText().toString());
+                    Utility.setSharedPrefStringData(mParent, Constants.COMPANY_ADDRESS_STATE, ""+etState.getText().toString());
+                    Utility.setSharedPrefStringData(mParent, Constants.COMPANY_ADDRESS_COUNTRY, etCountry.getText().toString());
+                    Utility.setSharedPrefStringData(mParent, Constants.COMPANY_ADDRESS_PIN, etPinCode.getText().toString());
+                    Utility.setSharedPrefStringData(mParent, Constants.COMPANY_ADDRESS_LAT, ""+etLatitude.getText().toString());
+                    Utility.setSharedPrefStringData(mParent, Constants.COMPANY_ADDRESS_LANG, ""+etLongitude.getText().toString());
+
                     mParent.onBackPressed();
+                }
+
             }
         }
     }

@@ -1,10 +1,12 @@
 package com.magni5.m5tracker.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Manikanta on 4/27/2017.
  */
 
-public class DataModel extends Model {
+public class DataModel extends Model implements Serializable{
 
     private UserModel User;
     private OwnerModel Owner;

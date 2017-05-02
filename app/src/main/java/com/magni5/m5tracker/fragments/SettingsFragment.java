@@ -14,6 +14,8 @@ import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
 import com.magni5.m5tracker.asynctask.IAsyncCaller;
 import com.magni5.m5tracker.models.Model;
+import com.magni5.m5tracker.models.SignInModel;
+import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 
 import butterknife.BindView;
@@ -59,10 +61,17 @@ public class SettingsFragment extends Fragment implements IAsyncCaller {
     @BindView(R.id.tv_company_address)
     TextView tv_company_address;
 
+/*    private SignInModel signInModel;*/
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mParent = (MainActivity) getActivity();
+       /* Bundle bundle = getArguments();
+        if(bundle!=null){
+            if (bundle.containsKey(Constants.LOGIN_DATA_MODEL))
+                signInModel = (SignInModel) bundle.getSerializable(Constants.LOGIN_DATA_MODEL);
+        }*/
     }
 
     @Override
@@ -94,6 +103,8 @@ public class SettingsFragment extends Fragment implements IAsyncCaller {
 
     @OnClick(R.id.lly_user_details)
     void navigateToUserDetails() {
+/*        Bundle navigationBundle = new Bundle();
+        navigationBundle.putSerializable(Constants.LOGIN_DATA_MODEL, signInModel);*/
         Utility.navigateDashBoardFragment(new UserDetailsFragment(), UserDetailsFragment.TAG, null, mParent);
     }
 
@@ -104,11 +115,15 @@ public class SettingsFragment extends Fragment implements IAsyncCaller {
 
     @OnClick(R.id.lly_company_details)
     void navigateToCompanyDetails() {
+/*        Bundle navigationBundle = new Bundle();
+        navigationBundle.putSerializable(Constants.LOGIN_DATA_MODEL, signInModel);*/
         Utility.navigateDashBoardFragment(new CompanyDetailsFragment(), CompanyDetailsFragment.TAG, null, mParent);
     }
 
     @OnClick(R.id.lly_company_address)
     void navigateToCompanyAddress() {
+/*        Bundle navigationBundle = new Bundle();
+        navigationBundle.putSerializable(Constants.LOGIN_DATA_MODEL, signInModel);*/
         Utility.navigateDashBoardFragment(new CompanyAddressFragment(), CompanyAddressFragment.TAG, null, mParent);
     }
 }

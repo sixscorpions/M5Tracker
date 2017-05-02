@@ -1,14 +1,25 @@
 package com.magni5.m5tracker.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Manikanta on 4/27/2017.
  */
 
-public class SignInModel extends Model{
+public class SignInModel extends Model implements Serializable{
 
     private DataModel Data;
     private int Status;
     private String Message;
+    private String Loginresponse;
+
+    public String getLoginresponse() {
+        return Loginresponse;
+    }
+
+    public void setLoginresponse(String loginresponse) {
+        Loginresponse = loginresponse;
+    }
 
     public DataModel getData() {
         return Data;

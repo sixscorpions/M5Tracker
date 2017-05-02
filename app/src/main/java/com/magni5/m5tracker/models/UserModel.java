@@ -1,10 +1,12 @@
 package com.magni5.m5tracker.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Manikanta on 4/27/2017.
  */
 
-public class UserModel extends Model {
+public class UserModel extends Model implements Serializable {
     private String DisplayName;
     private String Email;
     private String UserMagic;

@@ -1,10 +1,12 @@
 package com.magni5.m5tracker.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Manikanta on 4/27/2017.
  */
 
-public class OwnerModel {
+public class OwnerModel extends Model implements Serializable {
     private String DisplayName;
     private AddressModel Address;
     private String VehicleImageName;

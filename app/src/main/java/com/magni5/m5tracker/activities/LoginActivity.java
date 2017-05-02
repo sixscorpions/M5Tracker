@@ -19,6 +19,7 @@ import com.magni5.m5tracker.utils.Validations;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -86,17 +87,43 @@ public class LoginActivity extends BaseActivity implements IAsyncCaller {
     public void onComplete(Model model) {
 
         if (model != null) {
-            if (model instanceof SignInModel){
-                SignInModel signInModel = (SignInModel)model;
-                if(signInModel.getStatus() == Constants.SUCCESS){
+            if (model instanceof SignInModel) {
+                SignInModel signInModel = (SignInModel) model;
+                if (signInModel.getStatus() == Constants.SUCCESS) {
+                    setSharedPreferancesToSettingsScreen(signInModel);
+                    Utility.setSharedPrefStringData(this, Constants.LOGIN_DATA_MODEL, signInModel.getLoginresponse());
                     loginAndNavigation(signInModel);
                 }
             }
         }
     }
 
+    private void setSharedPreferancesToSettingsScreen(SignInModel signInModel) {
+
+        /*USER DETAILS*/
+        Utility.setSharedPrefStringData(this, Constants.USER_DETAILS_NAME, signInModel.getData().getUser().getDisplayName());
+        Utility.setSharedPrefStringData(this, Constants.USER_DETAILS_PHONE, signInModel.getData().getUser().getPhone());
+        Utility.setSharedPrefStringData(this, Constants.USER_DETAILS_EMAIL, signInModel.getData().getUser().getEmail());
+
+        /*COMPANY DETAILS*/
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_DETAILS_NAME, signInModel.getData().getUser().getOwner().getDisplayName());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_DETAILS_OSP_LMT, "" + signInModel.getData().getUser().getOwner().getOverspeedLimit());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_DETAILS_SAD_KM, "" + signInModel.getData().getUser().getOwner().getServiceAlertDistanceKM());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_DETAILS_IMG, signInModel.getData().getUser().getOwner().getVehicleImageUrl());
+
+        /*COMPANY ADDRESS*/
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_STREET, signInModel.getData().getUser().getOwner().getAddress().getStreet());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_CITY, "" + signInModel.getData().getUser().getOwner().getAddress().getCity());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_STATE, "" + signInModel.getData().getUser().getOwner().getAddress().getState());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_COUNTRY, signInModel.getData().getUser().getOwner().getAddress().getCountry());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_PIN, signInModel.getData().getUser().getOwner().getAddress().getPincode());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_LAT, "" + signInModel.getData().getUser().getOwner().getAddress().getLatitude());
+        Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_LANG, "" + signInModel.getData().getUser().getOwner().getAddress().getLongitude());
+
+    }
+
     private void loginAndNavigation(SignInModel signInModel) {
-        Intent dashBoardIntent = new Intent(LoginActivity.this,MainActivity.class);
+        Intent dashBoardIntent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(dashBoardIntent);
     }
 }

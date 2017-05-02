@@ -16,10 +16,12 @@ import com.magni5.m5tracker.asynctask.IAsyncCaller;
 import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
 import com.magni5.m5tracker.models.Model;
 import com.magni5.m5tracker.models.SettingsUpdateModel;
+import com.magni5.m5tracker.models.SignInModel;
 import com.magni5.m5tracker.parsers.SettingsUserDetailsParser;
 import com.magni5.m5tracker.parsers.SignInParser;
 import com.magni5.m5tracker.parsers.VehicleListParser;
 import com.magni5.m5tracker.utils.APIConstants;
+import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 import com.magni5.m5tracker.utils.Validations;
 
@@ -52,11 +54,17 @@ public class UserDetailsFragment extends Fragment implements IAsyncCaller {
     @BindView(R.id.btn_save)
     Button btn_save;
 
+/*    private SignInModel signInModel;*/
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mParent = (MainActivity) getActivity();
-
+      /*  Bundle bundle = getArguments();
+        if (bundle != null) {
+            if (bundle.containsKey(Constants.LOGIN_DATA_MODEL))
+                signInModel = (SignInModel) bundle.getSerializable(Constants.LOGIN_DATA_MODEL);
+        }*/
     }
 
     @Override
@@ -73,6 +81,11 @@ public class UserDetailsFragment extends Fragment implements IAsyncCaller {
      * To initiate UI
      */
     private void initUI() {
+
+            etDisplayName.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent,Constants.USER_DETAILS_NAME)) ? "" : Utility.getSharedPrefStringData(mParent,Constants.USER_DETAILS_NAME));
+            etEmail.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent,Constants.USER_DETAILS_EMAIL)) ? "" : Utility.getSharedPrefStringData(mParent,Constants.USER_DETAILS_EMAIL));
+            etPhone.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent,Constants.USER_DETAILS_PHONE)) ? "" : Utility.getSharedPrefStringData(mParent,Constants.USER_DETAILS_PHONE));
+
     }
 
     @OnClick(R.id.btn_save)
@@ -107,8 +120,12 @@ public class UserDetailsFragment extends Fragment implements IAsyncCaller {
             if (model instanceof SettingsUpdateModel) {
                 SettingsUpdateModel mSettingsUpdateModel = (SettingsUpdateModel) model;
                 Utility.showToastMessage(mParent, mSettingsUpdateModel.getmMessage());
-                if (mSettingsUpdateModel.getmStatus() == 1)
+                if (mSettingsUpdateModel.getmStatus() == 1){
+                    Utility.setSharedPrefStringData(mParent, Constants.USER_DETAILS_NAME, etDisplayName.getText().toString());
+                    Utility.setSharedPrefStringData(mParent, Constants.USER_DETAILS_PHONE, etPhone.getText().toString());
+                    Utility.setSharedPrefStringData(mParent, Constants.USER_DETAILS_EMAIL, etEmail.getText().toString());
                     mParent.onBackPressed();
+                }
             }
         }
     }
