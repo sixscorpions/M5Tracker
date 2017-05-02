@@ -65,4 +65,12 @@
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
 
+    <string name="the_following_is_the_list_of_vehicles">The Following is the list of vehicles</string>
+    <string name="search">Search</string>
+
+    <string name="reg_number">RegNumber</string>
+    <string name="avg_mileage">Avg Mileage</string>
+    <string name="tracker_tag">Tracker Tag</string>
+    <string name="view_edit">View/Edit</string>
+
 </resources>

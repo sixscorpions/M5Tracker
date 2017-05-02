@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_5dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/_40dp"
+        android:text="@string/the_following_is_the_list_of_vehicles"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_18sp" />
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/search"
+        android:minHeight="@dimen/_40dp"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1px"
+        android:background="@color/search_result_gradient_black" />
+
+    <ListView
+        android:id="@+id/ll_vehicle_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_5dp" />
+</LinearLayout>

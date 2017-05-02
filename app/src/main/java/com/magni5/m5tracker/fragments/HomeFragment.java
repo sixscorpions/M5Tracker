@@ -23,7 +23,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
@@ -143,7 +142,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     private void setPathsData() {
         if (locationLatLagListModels != null && locationLatLagListModels.size() > 0) {
             for (int i = 0; i < locationLatLagListModels.size(); i++) {
-                mMap.addPolyline(locationLatLagListModels.get(i).getPolylineOptions());
+                mMap.addPolyline(locationLatLagListModels.get(i).getPolylineOptions().color(Utility.getColor(mParent, R.color.light_gray)));
             }
         }
     }
@@ -154,7 +153,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
             mMap.clear();
             for (int i = 0; i < locationLatLagListModels.size(); i++) {
                 if (integers.contains(i)) {
-                    mMap.addPolyline(locationLatLagListModels.get(i).getPolylineOptions());
+                    mMap.addPolyline(locationLatLagListModels.get(i).getPolylineOptions().color(Utility.getColor(mParent, R.color.light_gray)));
                 }
             }
         }

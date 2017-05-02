@@ -29,6 +29,7 @@ import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.fragments.AddMarkerFragment;
 import com.magni5.m5tracker.fragments.HomeFragment;
 import com.magni5.m5tracker.fragments.SettingsFragment;
+import com.magni5.m5tracker.fragments.VehiclesFragment;
 import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 
@@ -111,6 +112,16 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_vehicles:
+                        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                            FragmentManager.BackStackEntry backEntry = getSupportFragmentManager()
+                                    .getBackStackEntryAt(
+                                            getSupportFragmentManager()
+                                                    .getBackStackEntryCount() - 1);
+                            String tagName = backEntry.getName();
+                            if (!tagName.equals(VehiclesFragment.TAG)) {
+                                Utility.navigateDashBoardFragment(new VehiclesFragment(), VehiclesFragment.TAG, null, MainActivity.this);
+                            }
+                        }
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_settings:
