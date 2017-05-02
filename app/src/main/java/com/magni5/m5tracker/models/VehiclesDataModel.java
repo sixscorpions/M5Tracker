@@ -1,10 +1,12 @@
 package com.magni5.m5tracker.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Shankar on 5/2/2017.
  */
 
-public class VehiclesDataModel {
+public class VehiclesDataModel implements Serializable {
 
     private String TrackerTag;
     private String RegNumber;

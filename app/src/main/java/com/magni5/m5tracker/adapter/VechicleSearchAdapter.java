@@ -1,6 +1,7 @@
 package com.magni5.m5tracker.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +13,11 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.magni5.m5tracker.R;
+import com.magni5.m5tracker.activities.MainActivity;
+import com.magni5.m5tracker.fragments.VehicleViewEditFragment;
 import com.magni5.m5tracker.models.VehiclesDataModel;
+import com.magni5.m5tracker.utils.Constants;
+import com.magni5.m5tracker.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +31,13 @@ public class VechicleSearchAdapter extends ArrayAdapter<VehiclesDataModel> {
     private ArrayList<VehiclesDataModel> mList;
     private ArrayList<VehiclesDataModel> sortedList;
     private LayoutInflater inflater;
+    private MainActivity mParent;
 
-    public VechicleSearchAdapter(Context context, int textViewResourceId, ArrayList<VehiclesDataModel> mList) {
-        super(context, textViewResourceId, mList);
+    public VechicleSearchAdapter(MainActivity mParent, int textViewResourceId, ArrayList<VehiclesDataModel> mList) {
+        super(mParent, textViewResourceId, mList);
         this.mList = mList;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mParent = mParent;
+        inflater = (LayoutInflater) mParent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -75,7 +82,16 @@ public class VechicleSearchAdapter extends ArrayAdapter<VehiclesDataModel> {
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        VehiclesDataModel model = mList.get(position);
+        final VehiclesDataModel model = mList.get(position);
+
+        holder.view_edit_value.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.VEHICLE_VIEW_EDIT_MODEL, model);
+                Utility.navigateDashBoardFragment(new VehicleViewEditFragment(), VehicleViewEditFragment.TAG, bundle, mParent);
+            }
+        });
 
         /*NAME*/
         holder.tv_display_name_value.setText(model.getDisplayName());

@@ -1,12 +1,13 @@
 package com.magni5.m5tracker.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Shankar on 5/2/2017.
  */
 
-public class VehiclesDataListModel extends Model {
+public class VehiclesDataListModel extends Model implements Serializable {
     private ArrayList<VehiclesDataModel> vehiclesDataModels;
     private int status;
 

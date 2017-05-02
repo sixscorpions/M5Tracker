@@ -73,4 +73,8 @@
     <string name="tracker_tag">Tracker Tag</string>
     <string name="view_edit">View/Edit</string>
 
+    <string name="avg_mileage_long">Avg Mileage(KM/L)</string>
+    <string name="registration_number">Registration Number</string>
+    <string name="last_service">Last Serviced Date</string>
+    <string name="mark_as_serviced">Mark As Serviced</string>
 </resources>

@@ -15,4 +15,6 @@ public class Constants {
     public static final String LOGIN_SESSION_ID = "login_session_id";
     public static int SUCCESS = 1;
     public static int MY_PERMISSIONS_REQUEST_LOCATION = 1;
+
+    public static String VEHICLE_VIEW_EDIT_MODEL = "VEHICLE_VIEW_EDIT_MODEL";
 }

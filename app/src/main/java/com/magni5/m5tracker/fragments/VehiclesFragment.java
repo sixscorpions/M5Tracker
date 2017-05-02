@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -17,11 +18,11 @@ import com.magni5.m5tracker.adapter.VechicleSearchAdapter;
 import com.magni5.m5tracker.asynctask.IAsyncCaller;
 import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
 import com.magni5.m5tracker.models.Model;
-import com.magni5.m5tracker.models.VehicleListModel;
 import com.magni5.m5tracker.models.VehiclesDataListModel;
-import com.magni5.m5tracker.parsers.LocationSpeedParser;
+import com.magni5.m5tracker.models.VehiclesDataModel;
 import com.magni5.m5tracker.parsers.VehiclesDataListParser;
 import com.magni5.m5tracker.utils.APIConstants;
+import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 
 import butterknife.BindView;
@@ -38,8 +39,8 @@ public class VehiclesFragment extends Fragment implements IAsyncCaller {
 
     @BindView(R.id.edt_search)
     EditText edtSearch;
-    @BindView(R.id.ll_vehicle_list)
-    ListView ll_vehicle_list;
+
+    private ListView ll_vehicle_list;
 
     private VehiclesDataListModel vehiclesDataListModel;
     private VechicleSearchAdapter vechicleSearchAdapter;
@@ -53,11 +54,11 @@ public class VehiclesFragment extends Fragment implements IAsyncCaller {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         if (rootView != null) {
             return rootView;
         }
         rootView = inflater.inflate(R.layout.fragment_vechiles, container, false);
+        ll_vehicle_list = (ListView) rootView.findViewById(R.id.ll_vehicle_list);
         ButterKnife.bind(this, rootView);
         getVehiclesData();
         return rootView;
@@ -92,6 +93,17 @@ public class VehiclesFragment extends Fragment implements IAsyncCaller {
         vechicleSearchAdapter = new VechicleSearchAdapter(mParent, 100, vehiclesDataListModel.getVehiclesDataModels());
         ll_vehicle_list.setAdapter(vechicleSearchAdapter);
 
+        ll_vehicle_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Utility.showLog("Post Data", "ll_vehicle_list");
+                VehiclesDataModel model = (VehiclesDataModel) parent.getAdapter().getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.VEHICLE_VIEW_EDIT_MODEL, model);
+                Utility.navigateDashBoardFragment(new VehicleViewEditFragment(), VehicleViewEditFragment.TAG, bundle, mParent);
+            }
+        });
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

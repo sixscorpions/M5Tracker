@@ -1,0 +1,140 @@
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:gravity="center_vertical"
+            android:text="@string/display_name"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_18sp" />
+
+        <EditText
+            android:id="@+id/et_display_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:enabled="false"
+            android:hint="@string/display_name"
+            android:maxLines="1"
+            android:padding="@dimen/_5dp"
+            android:singleLine="true"
+            android:textSize="@dimen/_18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:gravity="center_vertical"
+            android:text="@string/avg_mileage_long"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_18sp" />
+
+        <EditText
+            android:id="@+id/et_avg_mileage_long"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:hint="@string/avg_mileage_long"
+            android:maxLines="1"
+            android:padding="@dimen/_5dp"
+            android:singleLine="true"
+            android:textSize="@dimen/_18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:gravity="center_vertical"
+            android:text="@string/registration_number"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_18sp" />
+
+        <EditText
+            android:id="@+id/et_registration_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:enabled="false"
+            android:hint="@string/registration_number"
+            android:maxLines="1"
+            android:padding="@dimen/_5dp"
+            android:singleLine="true"
+            android:textSize="@dimen/_18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:gravity="center_vertical"
+            android:text="@string/tracker_tag"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_18sp" />
+
+        <EditText
+            android:id="@+id/et_tracker_tag"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:enabled="false"
+            android:hint="@string/tracker_tag"
+            android:maxLines="1"
+            android:padding="@dimen/_5dp"
+            android:singleLine="true"
+            android:textSize="@dimen/_18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:gravity="center_vertical"
+            android:text="@string/last_service"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_last_service"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_50dp"
+                android:layout_marginBottom="@dimen/_8dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:hint="@string/last_service"
+                android:maxLines="1"
+                android:padding="@dimen/_5dp"
+                android:singleLine="true"
+                android:textSize="@dimen/_18sp" />
+
+            <Button
+                android:id="@+id/mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_select_vechicle"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="@dimen/_5dp"
+                android:text="@string/mark_as_serviced"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_button_green"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sp" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
