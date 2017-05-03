@@ -62,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50dp"
             android:layout_marginTop="@dimen/_8dp"
+            android:inputType="number"
             android:layout_marginBottom="@dimen/_8dp"
             android:padding="@dimen/_5dp"
             android:singleLine="true"
@@ -72,6 +73,7 @@
             android:id="@+id/et_latitude"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50dp"
+            android:inputType="number"
             android:layout_marginTop="@dimen/_8dp"
             android:singleLine="true"
             android:maxLines="1"
@@ -84,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50dp"
             android:layout_marginTop="@dimen/_8dp"
+            android:inputType="number"
             android:layout_marginBottom="@dimen/_8dp"
             android:padding="@dimen/_5dp"
             android:hint="@string/longitude" />

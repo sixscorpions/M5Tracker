@@ -1,6 +1,7 @@
 package com.magni5.m5tracker.fragments;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +31,7 @@ import com.magni5.m5tracker.parsers.SettingsUserDetailsParser;
 import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -68,6 +70,7 @@ public class CompanyDetailsFragment extends Fragment implements IAsyncCaller, Im
     ImageView img_selected_image;
 
     String mImage = "";
+    String loadImage = "";
     private static ImsgeConverterInterface imsgeConverterInterface;
 
 /*    private SignInModel signInModel;*/
@@ -107,12 +110,24 @@ public class CompanyDetailsFragment extends Fragment implements IAsyncCaller, Im
     private void initUI() {
         etDisplayName.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_NAME)) ? "" : "" + Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_NAME));
         etOverspeedLimit.setText("" + Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_OSP_LMT));
-        etServiceAlertDistance.setText("" + Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_SAD_KM));
-
         if (!Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_IMG))) {
-            Uri uri = Uri.parse(Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_IMG));
+            String mSAD_KM = Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_SAD_KM);
+            etServiceAlertDistance.setText("" + mSAD_KM);
+        }
+        String mImagePath = Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_IMG);
+        if (!Utility.isValueNullOrEmpty(mImagePath)) {
+            if (mImagePath.contains(APIConstants.BASE_URL_IMG))
+                Picasso.with(mParent)
+                        .load(mImagePath)
+                        .into(img_selected_image);
+            else {
+                File mFile = new File(mImagePath);
+                if (mFile.exists()) {
+                    Bitmap myBitmap = BitmapFactory.decodeFile(mFile.getAbsolutePath());
+                    img_selected_image.setImageBitmap(myBitmap);
+                }
+            }
             img_selected_image.setVisibility(View.VISIBLE);
-            img_selected_image.setImageURI(uri);
 
         }
     }
@@ -134,7 +149,7 @@ public class CompanyDetailsFragment extends Fragment implements IAsyncCaller, Im
 
         LinkedHashMap linkedHashMap = new LinkedHashMap();
         try {
-            linkedHashMap.put("ip_markerimage", mImage);
+            linkedHashMap.put("ip_markerimage", Utility.convertFileToByteArray(new File(mImage)));
             linkedHashMap.put("ip_companydisplayname", displayName);
             linkedHashMap.put("ip_overspeedlimit", overSpeedLimit);
             linkedHashMap.put("ip_ServiceAlertDistanceKM", serviceAlertDistance);
@@ -170,7 +185,7 @@ public class CompanyDetailsFragment extends Fragment implements IAsyncCaller, Im
 
     @Override
     public void getBase64Image(String image, Bitmap bitmap) {
-        mImage = Utility.convertFileToByteArray(new File(image));
+        mImage = image;
         img_selected_image.setImageBitmap(bitmap);
         img_selected_image.setVisibility(View.VISIBLE);
     }

@@ -33,6 +33,7 @@
             android:layout_marginTop="@dimen/_8dp"
             android:layout_marginBottom="@dimen/_8dp"
             android:padding="@dimen/_5dp"
+            android:inputType="number"
             android:singleLine="true"
             android:maxLines="1"
             android:hint="@string/overspeed_limit" />
@@ -44,6 +45,7 @@
             android:layout_marginTop="@dimen/_8dp"
             android:singleLine="true"
             android:maxLines="1"
+            android:inputType="number"
             android:layout_marginBottom="@dimen/_8dp"
             android:padding="@dimen/_5dp"
             android:hint="@string/service_alert_distance" />

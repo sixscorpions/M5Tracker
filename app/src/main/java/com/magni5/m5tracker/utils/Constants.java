@@ -33,7 +33,7 @@ public class Constants {
     public static final String COMPANY_DETAILS_NAME = "COMPANY_DETAILS_NAME";
     public static final String COMPANY_DETAILS_OSP_LMT = "COMPANY_DETAILS_OSP_LMT";
     public static final String COMPANY_DETAILS_SAD_KM = "COMPANY_DETAILS_SAD_KM";
-    public static final String COMPANY_DETAILS_IMG = "COMPANY_DETAILS_SAD_KM";
+    public static final String COMPANY_DETAILS_IMG = "COMPANY_DETAILS_IMG";
 
     /*COMPANY ADDRESS*/
     public static final String COMPANY_ADDRESS_STREET = "COMPANY_ADDRESS_STREET";

@@ -7,6 +7,7 @@ import com.magni5.m5tracker.models.OwnerModel;
 import com.magni5.m5tracker.models.RoleModel;
 import com.magni5.m5tracker.models.SignInModel;
 import com.magni5.m5tracker.models.UserModel;
+import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Utility;
 
 import org.json.JSONException;
@@ -88,26 +89,26 @@ public class SignInParser implements Parser<Model> {
 
                             ownerModel.setAddress(addressModel);
                         }
-                        if(ownerJsonObject.has("VehicleImageName"))
+                        if (ownerJsonObject.has("VehicleImageName"))
                             ownerModel.setVehicleImageName(ownerJsonObject.optString("VehicleImageName"));
-                        if(ownerJsonObject.has("Type"))
+                        if (ownerJsonObject.has("Type"))
                             ownerModel.setType(ownerJsonObject.optString("Type"));
-                        if(ownerJsonObject.has("OverspeedLimit"))
+                        if (ownerJsonObject.has("OverspeedLimit"))
                             ownerModel.setOverspeedLimit(ownerJsonObject.optInt("OverspeedLimit"));
-                        if(ownerJsonObject.has("ServiceAlertDistanceKM"))
+                        if (ownerJsonObject.has("ServiceAlertDistanceKM"))
                             ownerModel.setServiceAlertDistanceKM(ownerJsonObject.optInt("ServiceAlertDistanceKM"));
-                        if(ownerJsonObject.has("ActivatedOn"))
-                        ownerModel.setActivatedOn(ownerJsonObject.optString("ActivatedOn"));
-                        if(ownerJsonObject.has("ActivationEndsOn"))
-                        ownerModel.setActivationEndsOn(ownerJsonObject.optString("ActivationEndsOn"));
-                        if(ownerJsonObject.has("ActivationEndsOnString"))
-                        ownerModel.setActivationEndsOnString(ownerJsonObject.optString("ActivationEndsOnString"));
-                        if(ownerJsonObject.has("VehicleImageUrl"))
-                        ownerModel.setVehicleImageUrl(ownerJsonObject.optString("VehicleImageUrl"));
-                        if(ownerJsonObject.has("Tag"))
-                        ownerModel.setTag(ownerJsonObject.optString("Tag"));
-                        if(ownerJsonObject.has("_id"))
-                        ownerModel.set_id(ownerJsonObject.optString("_id"));
+                        if (ownerJsonObject.has("ActivatedOn"))
+                            ownerModel.setActivatedOn(ownerJsonObject.optString("ActivatedOn"));
+                        if (ownerJsonObject.has("ActivationEndsOn"))
+                            ownerModel.setActivationEndsOn(ownerJsonObject.optString("ActivationEndsOn"));
+                        if (ownerJsonObject.has("ActivationEndsOnString"))
+                            ownerModel.setActivationEndsOnString(ownerJsonObject.optString("ActivationEndsOnString"));
+                        if (ownerJsonObject.has("VehicleImageUrl"))
+                            ownerModel.setVehicleImageUrl(APIConstants.BASE_URL_IMG + ownerJsonObject.optString("VehicleImageUrl"));
+                        if (ownerJsonObject.has("Tag"))
+                            ownerModel.setTag(ownerJsonObject.optString("Tag"));
+                        if (ownerJsonObject.has("_id"))
+                            ownerModel.set_id(ownerJsonObject.optString("_id"));
 
                         userModel.setOwner(ownerModel);
                     }
