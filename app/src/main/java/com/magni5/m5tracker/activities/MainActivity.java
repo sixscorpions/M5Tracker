@@ -36,6 +36,7 @@ import com.magni5.m5tracker.fragments.CompanyDetailsFragment;
 import com.magni5.m5tracker.fragments.HomeFragment;
 import com.magni5.m5tracker.fragments.SettingsFragment;
 import com.magni5.m5tracker.fragments.VehiclesFragment;
+import com.magni5.m5tracker.models.SignInModel;
 import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 
@@ -195,6 +196,9 @@ public class MainActivity extends AppCompatActivity {
         View header = navigationView.getHeaderView(0);
         TextView txt_name = (TextView) header.findViewById(R.id.txt_name);
         TextView txt_user_designation = (TextView) header.findViewById(R.id.txt_user_designation);
+
+        txt_name.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(this, Constants.USER_DETAILS_NAME)) ? "USER NAME" : Utility.getSharedPrefStringData(this, Constants.USER_DETAILS_NAME));
+        txt_user_designation.setText(Utility.isValueNullOrEmpty(Utility.getSharedPrefStringData(this, Constants.USER_DETAILS_EMAIL)) ? "EMAIL" : Utility.getSharedPrefStringData(this, Constants.USER_DETAILS_EMAIL));
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
