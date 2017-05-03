@@ -14,6 +14,7 @@ public class LatLagListModel extends Model {
     private int status;
     private PolylineOptions polylineOptions;
     private LatLng latLng;
+    private ArrayList<LatLng> latLngArrayList;
 
     public String getTrackerId() {
         return TrackerId;
@@ -45,5 +46,13 @@ public class LatLagListModel extends Model {
 
     public void setLatLng(LatLng latLng) {
         this.latLng = latLng;
+    }
+
+    public ArrayList<LatLng> getLatLngArrayList() {
+        return latLngArrayList;
+    }
+
+    public void setLatLngArrayList(ArrayList<LatLng> latLngArrayList) {
+        this.latLngArrayList = latLngArrayList;
     }
 }

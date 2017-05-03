@@ -39,6 +39,7 @@ public class LatLngListParser implements Parser<Model> {
                 }
 
                 lineOptions.addAll(points);
+                mLatLagListModel.setLatLngArrayList(points);
                 if (jsonArray != null && jsonArray.length() > 0) {
                     mLatLagListModel.setLatLng(new LatLng(jsonArray.optJSONObject(0).optDouble("lat"), jsonArray.optJSONObject(0).optDouble("lng")));
                 }

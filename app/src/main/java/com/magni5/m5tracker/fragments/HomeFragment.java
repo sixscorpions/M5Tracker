@@ -4,6 +4,7 @@ package com.magni5.m5tracker.fragments;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
 import com.magni5.m5tracker.adapter.SelectVehicleAdapter;
@@ -252,8 +254,8 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                     }
                 }
                 tv_speed_value.setText("" + locationSpeedModel.getSpeed());
-                tv_distance_travelled_value.setText("Pending from API");
-                tv_running_value.setText("Pending from API");
+                tv_distance_travelled_value.setText("" + getDistanceTravelled(locationSpeedModel.getTrackerId()) + " Km");
+                tv_running_value.setText("Pending");
                 tv_time_value.setText("" + locationSpeedModel.getEventDateTime());
                 if (locationSpeedModel.getIgnition() == 1) {
                     tv_ignition_value.setText("On");
@@ -267,6 +269,18 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
             }
         }
         mDialog.show();
+    }
+
+    private String getDistanceTravelled(String trackerId) {
+        double distance = 0.0;
+        for (int i = 0; i < locationLatLagListModels.size(); i++) {
+            if (locationLatLagListModels.get(i).getTrackerId().equalsIgnoreCase(trackerId)) {
+                distance = SphericalUtil.computeLength(locationLatLagListModels.get(i).getLatLngArrayList());
+            }
+        }
+        Utility.showLog("distance", "distance :" + String.format("%.2f", distance / 1000));
+
+        return String.format("%.2f", distance / 1000);
     }
 
     private void getTrackersData() {
