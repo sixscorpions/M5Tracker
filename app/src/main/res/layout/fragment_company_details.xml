@@ -9,73 +9,73 @@
         android:id="@+id/lly_company_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:orientation="vertical"
         android:layout_marginEnd="@dimen/_10dp"
-        android:layout_marginStart="@dimen/_10dp">
+        android:layout_marginStart="@dimen/_10dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/et_display_name"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50dp"
-            android:layout_marginTop="@dimen/_8dp"
-            android:singleLine="true"
-            android:maxLines="1"
             android:layout_marginBottom="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:hint="@string/display_name"
+            android:maxLines="1"
             android:padding="@dimen/_5dp"
-            android:hint="@string/display_name" />
+            android:singleLine="true" />
 
         <EditText
             android:id="@+id/et_Overspeed_limit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50dp"
-            android:layout_marginTop="@dimen/_8dp"
             android:layout_marginBottom="@dimen/_8dp"
-            android:padding="@dimen/_5dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:hint="@string/overspeed_limit"
             android:inputType="number"
-            android:singleLine="true"
             android:maxLines="1"
-            android:hint="@string/overspeed_limit" />
+            android:padding="@dimen/_5dp"
+            android:singleLine="true" />
 
         <EditText
             android:id="@+id/et_service_alert_distance"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50dp"
-            android:layout_marginTop="@dimen/_8dp"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:inputType="number"
             android:layout_marginBottom="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:hint="@string/service_alert_distance"
+            android:inputType="number"
+            android:maxLines="1"
             android:padding="@dimen/_5dp"
-            android:hint="@string/service_alert_distance" />
+            android:singleLine="true" />
 
         <EditText
             android:id="@+id/et_vehicle_map_marker_img"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50dp"
-            android:layout_marginTop="@dimen/_8dp"
-            android:focusable="false"
             android:layout_marginBottom="@dimen/_8dp"
-            android:padding="@dimen/_5dp"
-            android:hint="@string/vehicle_map_marker_img" />
+            android:layout_marginTop="@dimen/_8dp"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="@string/vehicle_map_marker_img"
+            android:padding="@dimen/_5dp" />
 
         <ImageView
             android:id="@+id/img_selected_image"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="@dimen/_200dp"
-            />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_90dp"
-            android:background="@drawable/drawable_login_button"
-            android:textColor="@color/white"
             android:layout_margin="@dimen/_8dp"
+            android:background="@drawable/drawable_login_button"
             android:paddingEnd="@dimen/_90dp"
-            android:text="@string/save"/>
+            android:paddingStart="@dimen/_90dp"
+            android:text="@string/save"
+            android:textColor="@color/white" />
     </LinearLayout>
 </ScrollView>

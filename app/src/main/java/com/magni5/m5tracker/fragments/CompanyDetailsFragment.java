@@ -1,15 +1,12 @@
 package com.magni5.m5tracker.fragments;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
@@ -26,16 +22,13 @@ import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
 import com.magni5.m5tracker.interfaces.ImsgeConverterInterface;
 import com.magni5.m5tracker.models.Model;
 import com.magni5.m5tracker.models.SettingsUpdateModel;
-import com.magni5.m5tracker.models.SignInModel;
 import com.magni5.m5tracker.parsers.SettingsUserDetailsParser;
 import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.net.URI;
 import java.util.LinkedHashMap;
 
 import butterknife.BindView;
@@ -116,11 +109,12 @@ public class CompanyDetailsFragment extends Fragment implements IAsyncCaller, Im
         }
         String mImagePath = Utility.getSharedPrefStringData(mParent, Constants.COMPANY_DETAILS_IMG);
         if (!Utility.isValueNullOrEmpty(mImagePath)) {
-            if (mImagePath.contains(APIConstants.BASE_URL_IMG))
+            if (mImagePath.contains(APIConstants.BASE_URL_IMG)) {
+                Utility.showLog("mImagePath", "mImagePath " + mImagePath);
                 Picasso.with(mParent)
                         .load(mImagePath)
                         .into(img_selected_image);
-            else {
+            } else {
                 File mFile = new File(mImagePath);
                 if (mFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(mFile.getAbsolutePath());
@@ -134,7 +128,7 @@ public class CompanyDetailsFragment extends Fragment implements IAsyncCaller, Im
 
     @OnClick(R.id.et_vehicle_map_marker_img)
     void selectImage() {
-        browsePictureData();
+        //browsePictureData();
     }
 
     @OnClick(R.id.btn_save)
@@ -149,7 +143,7 @@ public class CompanyDetailsFragment extends Fragment implements IAsyncCaller, Im
 
         LinkedHashMap linkedHashMap = new LinkedHashMap();
         try {
-            linkedHashMap.put("ip_markerimage", Utility.convertFileToByteArray(new File(mImage)));
+            //linkedHashMap.put("ip_markerimage", Utility.convertFileToByteArray(new File(mImage)));
             linkedHashMap.put("ip_companydisplayname", displayName);
             linkedHashMap.put("ip_overspeedlimit", overSpeedLimit);
             linkedHashMap.put("ip_ServiceAlertDistanceKM", serviceAlertDistance);
