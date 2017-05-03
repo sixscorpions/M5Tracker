@@ -23,7 +23,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
 import com.magni5.m5tracker.adapter.SelectVehicleAdapter;
@@ -127,7 +130,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 getTrackerPathsData();
             } else if (model instanceof LocationSpeedModel) {
                 locationSpeedModelArrayList.add((LocationSpeedModel) model);
-                //setDataToTheLayout();
+                setMarkerOnMap((LocationSpeedModel) model);
             } else if (model instanceof LatLagListModel) {
                 locationLatLagListModels.add((LatLagListModel) model);
                 LatLagListModel latLagListModel = (LatLagListModel) model;
@@ -137,6 +140,23 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         } else {
             Utility.showToastMessage(mParent, Utility.getResourcesString(mParent, R.string.something_went_wrong));
         }
+    }
+
+    private void setMarkerOnMap(LocationSpeedModel model) {
+        LatLng mLatLng = new LatLng(model.getLatitude(),
+                model.getLongitude());
+        Marker myMarker;
+        if (model.getIgnition() == 1) {
+            myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_on_marker))
+                            .position(mLatLng)
+                    /*.title(model.getMessage())*/);
+        } else {
+            myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_off_marker))
+                            .position(mLatLng)
+                    /*.title(model.getMessage())*/);
+        }
+
+        myMarker.setTag(model.get_id());
     }
 
     private void setPathsData() {
@@ -335,6 +355,6 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.animateCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
-        mMap.setMaxZoomPreference(14.0f);
+        mMap.setMaxZoomPreference(21.0f);
     }
 }
