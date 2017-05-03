@@ -236,7 +236,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 TextView tv_ignition_value = (TextView) itemList.findViewById(R.id.tv_ignition_value);
 
                 TextView tv_signal = (TextView) itemList.findViewById(R.id.tv_signal);
-                TextView tv_signal_value = (TextView) itemList.findViewById(R.id.tv_signal_value);
+                ImageView img_signal = (ImageView) itemList.findViewById(R.id.img_signal);
 
                 Button button = (Button) itemList.findViewById(R.id.btn_immobilize);
                 button.setTag(i);
@@ -263,7 +263,17 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                     tv_ignition_value.setText("Off");
                 }
 
-                tv_signal_value.setText("" + locationSpeedModel.getSignal());
+                if (locationSpeedModel.getSignal() > 0 && locationSpeedModel.getSignal() < 10) {
+                    img_signal.setImageDrawable(Utility.getDrawable(mParent, R.drawable.one));
+                } else if (locationSpeedModel.getSignal() >= 10 && locationSpeedModel.getSignal() < 15) {
+                    img_signal.setImageDrawable(Utility.getDrawable(mParent, R.drawable.two));
+                } else if (locationSpeedModel.getSignal() >= 15 && locationSpeedModel.getSignal() < 20) {
+                    img_signal.setImageDrawable(Utility.getDrawable(mParent, R.drawable.three));
+                } else if (locationSpeedModel.getSignal() >= 20 && locationSpeedModel.getSignal() < 25) {
+                    img_signal.setImageDrawable(Utility.getDrawable(mParent, R.drawable.four));
+                } else if (locationSpeedModel.getSignal() >= 25) {
+                    img_signal.setImageDrawable(Utility.getDrawable(mParent, R.drawable.five));
+                }
 
                 ll_tackers_detail_list.addView(itemList);
             }

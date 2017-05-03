@@ -177,14 +177,13 @@
             android:textSize="@dimen/_18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_signal_value"
+        <ImageView
+            android:id="@+id/img_signal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:textColor="@color/black_color"
-            android:textSize="@dimen/_18sp" />
+            android:src="@drawable/zero" />
     </RelativeLayout>
 
     <Button
