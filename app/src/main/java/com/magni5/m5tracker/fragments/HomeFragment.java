@@ -253,7 +253,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                         tv_vehicle_value.setText("" + vehicleListModel.getVehicleModelArrayList().get(j).getDisplayName());
                     }
                 }
-                tv_speed_value.setText("" + locationSpeedModel.getSpeed());
+                tv_speed_value.setText("" + String.format("%.2f", locationSpeedModel.getSpeed()));
                 tv_distance_travelled_value.setText("" + getDistanceTravelled(locationSpeedModel.getTrackerId()) + " Km");
                 tv_running_value.setText("Pending");
                 tv_time_value.setText("" + locationSpeedModel.getEventDateTime());
@@ -379,6 +379,6 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.animateCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
-        mMap.setMaxZoomPreference(21.0f);
+        mMap.setMaxZoomPreference(14.0f);
     }
 }

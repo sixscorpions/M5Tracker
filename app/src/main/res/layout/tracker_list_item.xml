@@ -5,17 +5,18 @@
     android:orientation="vertical"
     android:padding="@dimen/_5dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="@dimen/_5dp">
 
         <TextView
             android:id="@+id/tv_vehicle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_gravity="start"
+            android:gravity="center"
             android:text="@string/vehicle"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -23,25 +24,26 @@
 
         <TextView
             android:id="@+id/tv_vehicle_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="@dimen/_5dp">
 
         <TextView
             android:id="@+id/tv_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_gravity="start"
+            android:gravity="center"
             android:text="@string/speed"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -49,25 +51,26 @@
 
         <TextView
             android:id="@+id/tv_speed_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="@dimen/_5dp">
 
         <TextView
             android:id="@+id/tv_distance_travelled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_gravity="start"
+            android:gravity="center"
             android:text="@string/distance_travelled"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -75,25 +78,26 @@
 
         <TextView
             android:id="@+id/tv_distance_travelled_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="@dimen/_5dp">
 
         <TextView
             android:id="@+id/tv_running"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_gravity="start"
+            android:gravity="center"
             android:text="@string/running"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -101,25 +105,26 @@
 
         <TextView
             android:id="@+id/tv_running_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="@dimen/_5dp">
 
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_gravity="start"
+            android:gravity="center"
             android:text="@string/time"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -127,25 +132,26 @@
 
         <TextView
             android:id="@+id/tv_time_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="@dimen/_5dp">
 
         <TextView
             android:id="@+id/tv_ignition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_gravity="start"
+            android:gravity="center"
             android:text="@string/ignition"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -153,13 +159,13 @@
 
         <TextView
             android:id="@+id/tv_ignition_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
