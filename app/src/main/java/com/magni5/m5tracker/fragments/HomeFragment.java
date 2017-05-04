@@ -108,10 +108,6 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         supportMapFragment = SupportMapFragment.newInstance();
         fragmentManager.beginTransaction().replace(R.id.map, supportMapFragment).commit();
         supportMapFragment.getMapAsync(this);
-
-        locationSpeedModelArrayList = new ArrayList<>();
-        locationLatLagListModels = new ArrayList<>();
-        getVehiclesData();
     }
 
     private void getVehiclesData() {
@@ -166,15 +162,9 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     @Override
     public void onResume() {
         if (isDataGot) {
-            getTrackersData();
-            isDataGot = false;
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    runnable = this;
-                    handler.postDelayed(runnable, delay);
-                    getTrackersData();
-                }
-            }, delay);
+            locationSpeedModelArrayList = new ArrayList<>();
+            locationLatLagListModels = new ArrayList<>();
+            getVehiclesData();
         }
         super.onResume();
     }
