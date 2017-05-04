@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -73,6 +74,11 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     private SupportMapFragment supportMapFragment;
     private float mZoomLevel = 11.5f;
 
+    private Handler handler;
+    private Runnable runnable;
+    private int delay = 7000;
+    private boolean isDataGot;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +102,8 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
      * Initialize the ui and sets the type face and Find the listeners
      */
     private void initUI() {
-
-
+        isDataGot = false;
+        handler = new Handler();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         supportMapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
         supportMapFragment = SupportMapFragment.newInstance();
@@ -130,6 +136,13 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 vehicleModelArrayList = vehicleListModel.getVehicleModelArrayList();
                 getTrackersData();
                 getTrackerPathsData();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        runnable = this;
+                        handler.postDelayed(runnable, delay);
+                        getTrackersData();
+                    }
+                }, delay);
             } else if (model instanceof LocationSpeedModel) {
                 locationSpeedModelArrayList.add((LocationSpeedModel) model);
                 setMarkerOnMap((LocationSpeedModel) model);
@@ -142,6 +155,29 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         } else {
             Utility.showToastMessage(mParent, Utility.getResourcesString(mParent, R.string.something_went_wrong));
         }
+    }
+
+    @Override
+    public void onPause() {
+        isDataGot = true;
+        handler.removeCallbacks(runnable); //stop handler when activity not visible
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        if (isDataGot) {
+            getTrackersData();
+            isDataGot = false;
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    runnable = this;
+                    handler.postDelayed(runnable, delay);
+                    getTrackersData();
+                }
+            }, delay);
+        }
+        super.onResume();
     }
 
     private void setMarkerOnMap(LocationSpeedModel model) {
@@ -297,6 +333,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         for (int i = 0; i < vehicleListModel.getTrackerModelArrayList().size(); i++) {
             getLocationsData(vehicleListModel.getTrackerModelArrayList().get(i).get_id());
         }
+
     }
 
     private void getLocationsData(String id) {
