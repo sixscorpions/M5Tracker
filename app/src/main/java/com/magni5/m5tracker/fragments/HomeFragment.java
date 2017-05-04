@@ -88,7 +88,6 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         if (rootView != null) {
             return rootView;
         }
@@ -400,11 +399,39 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                         }
                     }
                     setPathsData(integers);
+                    setMarkersData(integers);
                 }
                 mDialog.dismiss();
             }
         });
         mDialog.show();
+    }
+
+    private void setMarkersData(ArrayList<Integer> integers) {
+        if (locationLatLagListModels != null && locationLatLagListModels.size() > 0 && integers != null && integers.size() > 0) {
+            for (int i = 0; i < locationLatLagListModels.size(); i++) {
+                if (integers.contains(i)) {
+                    String trackerId = locationLatLagListModels.get(i).getTrackerId();
+                    LocationSpeedModel locationSpeedModel = new LocationSpeedModel();
+                    for (int j = 0; j < locationSpeedModelArrayList.size(); j++) {
+                        if (trackerId.equalsIgnoreCase(locationSpeedModelArrayList.get(j).getTrackerId())) {
+                            locationSpeedModel = locationSpeedModelArrayList.get(j);
+                        }
+                    }
+                    LatLng mLatLng = new LatLng(locationSpeedModel.getLatitude(),
+                            locationSpeedModel.getLongitude());
+                    Marker myMarker;
+                    if (locationSpeedModel.getIgnition() == 1) {
+                        myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_on_marker))
+                                .position(mLatLng));
+                    } else {
+                        myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_off_marker))
+                                .position(mLatLng));
+                    }
+                    myMarker.setTag(locationSpeedModel.get_id());
+                }
+            }
+        }
     }
 
     @Override
