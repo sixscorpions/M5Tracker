@@ -29,6 +29,8 @@ public class LatLngListParser implements Parser<Model> {
                 JSONObject jsonObjectData = jsonObject.optJSONObject("Data");
 
                 mLatLagListModel.setTrackerId(jsonObjectData.optString("TrackerId"));
+                mLatLagListModel.setTodayOnTime(jsonObjectData.optString("TodayOnTime"));
+                mLatLagListModel.setTodayOnTimeMs(jsonObjectData.optLong("TodayOnTimeMs"));
                 JSONArray jsonArray = jsonObjectData.optJSONArray("Path");
                 ArrayList<LatLng> points = new ArrayList<LatLng>();
                 PolylineOptions lineOptions = new PolylineOptions();

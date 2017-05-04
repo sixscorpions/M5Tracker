@@ -47,6 +47,7 @@ import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Utility;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -280,7 +281,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 }
                 tv_speed_value.setText("" + String.format("%.2f", locationSpeedModel.getSpeed()));
                 tv_distance_travelled_value.setText("" + getDistanceTravelled(locationSpeedModel.getTrackerId()) + " Km");
-                tv_running_value.setText("Pending");
+                tv_running_value.setText("" + getTravelledTime(locationSpeedModel.getTrackerId()));
                 tv_time_value.setText("" + locationSpeedModel.getEventDateTime());
                 if (locationSpeedModel.getIgnition() == 1) {
                     tv_ignition_value.setText("On");
@@ -316,6 +317,21 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         Utility.showLog("distance", "distance :" + String.format("%.2f", distance / 1000));
 
         return String.format("%.2f", distance / 1000);
+    }
+
+    private String getTravelledTime(String trackerId) {
+        String time = "";
+        for (int i = 0; i < locationLatLagListModels.size(); i++) {
+            if (locationLatLagListModels.get(i).getTrackerId().equalsIgnoreCase(trackerId)) {
+                Utility.showLog("getTodayOnTimeMs", "getTodayOnTimeMs " + locationLatLagListModels.get(i).getTodayOnTimeMs());
+                time = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(locationLatLagListModels.get(i).getTodayOnTimeMs()),
+                        TimeUnit.MILLISECONDS.toMinutes(locationLatLagListModels.get(i).getTodayOnTimeMs()) % TimeUnit.HOURS.toMinutes(1),
+                        TimeUnit.MILLISECONDS.toSeconds(locationLatLagListModels.get(i).getTodayOnTimeMs()) % TimeUnit.MINUTES.toSeconds(1));
+                Utility.showLog("getTodayOnTimeMs", "getToday " + time);
+            }
+        }
+
+        return time;
     }
 
     private void getTrackersData() {

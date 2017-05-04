@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class LatLagListModel extends Model {
     private String TrackerId;
+    private String TodayOnTime;
+    private long TodayOnTimeMs;
     private int status;
     private PolylineOptions polylineOptions;
     private LatLng latLng;
@@ -54,5 +56,21 @@ public class LatLagListModel extends Model {
 
     public void setLatLngArrayList(ArrayList<LatLng> latLngArrayList) {
         this.latLngArrayList = latLngArrayList;
+    }
+
+    public String getTodayOnTime() {
+        return TodayOnTime;
+    }
+
+    public void setTodayOnTime(String todayOnTime) {
+        TodayOnTime = todayOnTime;
+    }
+
+    public long getTodayOnTimeMs() {
+        return TodayOnTimeMs;
+    }
+
+    public void setTodayOnTimeMs(long todayOnTimeMs) {
+        TodayOnTimeMs = todayOnTimeMs;
     }
 }
