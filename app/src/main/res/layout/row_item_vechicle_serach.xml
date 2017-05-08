@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_5dp">
@@ -13,24 +14,23 @@
             android:id="@+id/tv_display_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:text="@string/display_name"
+            android:gravity="center"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_display_name_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_5dp">
@@ -39,8 +39,7 @@
             android:id="@+id/tv_reg_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+android:gravity="center"
             android:text="@string/reg_number"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -48,15 +47,15 @@
 
         <TextView
             android:id="@+id/tv_reg_number_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_5dp">
@@ -65,8 +64,7 @@
             android:id="@+id/tv_avg_mileage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+android:gravity="center"
             android:text="@string/avg_mileage"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -74,15 +72,15 @@
 
         <TextView
             android:id="@+id/tv_avg_mileage_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_5dp">
@@ -91,8 +89,7 @@
             android:id="@+id/tv_tracker_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+android:gravity="center"
             android:text="@string/tracker_tag"
             android:textColor="@color/dark_slate_blue"
             android:textSize="@dimen/_18sp"
@@ -100,13 +97,12 @@
 
         <TextView
             android:id="@+id/tv_tracker_tag_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:gravity="end|center"
             android:textColor="@color/black_color"
             android:textSize="@dimen/_18sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/view_edit_value"

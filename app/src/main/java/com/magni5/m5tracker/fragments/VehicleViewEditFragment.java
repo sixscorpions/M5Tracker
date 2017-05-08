@@ -77,7 +77,7 @@ public class VehicleViewEditFragment extends Fragment implements IAsyncCaller {
         etAvgMileageLong.setText("" + model.getMileage());
         etRegistrationNumber.setText("" + model.getRegNumber());
         etTrackerTag.setText("" + model.getTrackerTag());
-        etLastService.setText("" + model.getLastServicedDate());
+        etLastService.setText("" + model.getLastServicedDate().substring(0,10));
 
     }
 

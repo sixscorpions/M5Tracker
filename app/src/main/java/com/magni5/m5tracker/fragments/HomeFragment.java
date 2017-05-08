@@ -258,7 +258,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 tv_speed_value.setText("" + String.format("%.2f", locationSpeedModel.getSpeed()));
                 tv_distance_travelled_value.setText("" + getDistanceTravelled(locationSpeedModel.getTrackerId()) + " Km");
                 tv_running_value.setText("" + getTravelledTime(locationSpeedModel.getTrackerId()));
-                tv_time_value.setText("" + locationSpeedModel.getEventDateTime());
+                tv_time_value.setText("" + locationSpeedModel.getEventDateTime().substring(0,10));
                 if (locationSpeedModel.getIgnition() == 1) {
                     tv_ignition_value.setText("On");
                 } else {
