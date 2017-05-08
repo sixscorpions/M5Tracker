@@ -34,9 +34,7 @@ import com.magni5.m5tracker.asynctask.IAsyncCaller;
 import com.magni5.m5tracker.asynctask.ServerJSONAsyncTask;
 import com.magni5.m5tracker.models.AddMarkModel;
 import com.magni5.m5tracker.models.Model;
-import com.magni5.m5tracker.models.VehicleListModel;
 import com.magni5.m5tracker.parsers.AddMarkParser;
-import com.magni5.m5tracker.parsers.LocationSpeedParser;
 import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Utility;
 import com.magni5.m5tracker.utils.Validations;
@@ -148,9 +146,9 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
         supportAddMarkerMapFragment.getMapAsync(this);
 
         vehicleArrayList = new ArrayList<>();
-        if (HomeFragment.vehicleModelArrayList != null && HomeFragment.vehicleModelArrayList.size() > 0) {
-            for (int i = 0; i < HomeFragment.vehicleModelArrayList.size(); i++) {
-                vehicleArrayList.add(HomeFragment.vehicleModelArrayList.get(i).getDisplayName());
+        if (HomeFragment.vehicleListModel.getVehicleModelArrayList() != null && HomeFragment.vehicleListModel.getVehicleModelArrayList().size() > 0) {
+            for (int i = 0; i < HomeFragment.vehicleListModel.getVehicleModelArrayList().size(); i++) {
+                vehicleArrayList.add(HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getDisplayName());
             }
         }
         if (vehicleArrayList != null && vehicleArrayList.size() > 0) {
@@ -178,9 +176,9 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mAddMarkerMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLngFromSelection(getTrackerId(HomeFragment.vehicleModelArrayList.get(position).get_id()))));
+                mAddMarkerMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLngFromSelection(getTrackerId(HomeFragment.vehicleListModel.getVehicleModelArrayList().get(position).get_id()))));
                 mAddMarkerMap.animateCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
-                vechicleId = HomeFragment.vehicleModelArrayList.get(position).get_id();
+                vechicleId = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(position).get_id();
             }
 
             @Override
@@ -192,11 +190,11 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
 
     private String getTrackerId(String id) {
         String ids = "";
-        if (HomeFragment.vehicleListModel != null && HomeFragment.vehicleListModel.getTrackerModelArrayList() != null &&
-                HomeFragment.vehicleListModel.getTrackerModelArrayList().size() > 0) {
+        if (HomeFragment.vehicleListModel != null && HomeFragment.vehicleListModel.getVehicleModelArrayList() != null &&
+                HomeFragment.vehicleListModel.getVehicleModelArrayList().size() > 0) {
             for (int i = 0; i < HomeFragment.vehicleListModel.getVehicleModelArrayList().size(); i++) {
                 if (HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).get_id().equalsIgnoreCase(id)) {
-                    ids = HomeFragment.vehicleListModel.getTrackerModelArrayList().get(i).get_id();
+                    ids = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).get_id();
                 }
             }
         }
@@ -207,11 +205,11 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
         LatLng latLng = null;
         double lat = 0;
         double lng = 0;
-        if (HomeFragment.locationSpeedModelArrayList != null && HomeFragment.locationSpeedModelArrayList.size() > 0)
-            for (int i = 0; i < HomeFragment.locationSpeedModelArrayList.size(); i++) {
-                if (HomeFragment.locationSpeedModelArrayList.get(i).getTrackerId().equalsIgnoreCase(id)) {
-                    lat = HomeFragment.locationSpeedModelArrayList.get(i).getLatitude();
-                    lng = HomeFragment.locationSpeedModelArrayList.get(i).getLongitude();
+        if (HomeFragment.vehicleListModel.getVehicleModelArrayList() != null && HomeFragment.vehicleListModel.getVehicleModelArrayList().size() > 0)
+            for (int i = 0; i < HomeFragment.vehicleListModel.getVehicleModelArrayList().size(); i++) {
+                if (HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id().equalsIgnoreCase(id)) {
+                    lat = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel().getLatitude();
+                    lng = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel().getLongitude();
                 }
             }
         latLng = new LatLng(lat, lng);
@@ -223,20 +221,20 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
      * Show the markers on the map
      */
     private void showMarkersOnMap() {
-        if (HomeFragment.locationSpeedModelArrayList != null && HomeFragment.locationSpeedModelArrayList.size() > 0) {
+        if (HomeFragment.vehicleListModel.getVehicleModelArrayList() != null && HomeFragment.vehicleListModel.getVehicleModelArrayList().size() > 0) {
             ArrayList<Marker> markers = new ArrayList<>();
             mAddMarkerMap.clear();
-            for (int i = 0; i < HomeFragment.locationSpeedModelArrayList.size(); i++) {
-                LatLng mLatLng = new LatLng(HomeFragment.locationSpeedModelArrayList.get(i).getLatitude(),
-                        HomeFragment.locationSpeedModelArrayList.get(i).getLongitude());
+            for (int i = 0; i < HomeFragment.vehicleListModel.getVehicleModelArrayList().size(); i++) {
+                LatLng mLatLng = new LatLng(HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel().getLatitude(),
+                        HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel().getLongitude());
                 Marker myMarker = mAddMarkerMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
                         .position(mLatLng));
                 myMarker.setTag(i);
                 markers.add(myMarker);
             }
-            if (HomeFragment.locationSpeedModelArrayList != null && HomeFragment.locationSpeedModelArrayList.size() > 0)
-                mAddMarkerMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(HomeFragment.locationSpeedModelArrayList.get(0).getLatitude(),
-                        HomeFragment.locationSpeedModelArrayList.get(0).getLongitude())));
+            if (HomeFragment.vehicleListModel.getVehicleModelArrayList() != null && HomeFragment.vehicleListModel.getVehicleModelArrayList().size() > 0)
+                mAddMarkerMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(HomeFragment.vehicleListModel.getVehicleModelArrayList().get(0).getLocationSpeedModel().getLatitude(),
+                        HomeFragment.vehicleListModel.getVehicleModelArrayList().get(0).getLocationSpeedModel().getLongitude())));
             mAddMarkerMap.animateCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
             mAddMarkerMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
                 @Override

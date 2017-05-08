@@ -7,24 +7,15 @@ import java.util.ArrayList;
  */
 
 public class VehicleListModel extends Model {
-    private ArrayList<VehicleModel> vehicleModelArrayList;
-    private ArrayList<TrackerModel> trackerModelArrayList;
+    private ArrayList<VehicleListNewModel> vehicleModelArrayList;
     private int status;
 
-    public ArrayList<VehicleModel> getVehicleModelArrayList() {
+    public ArrayList<VehicleListNewModel> getVehicleModelArrayList() {
         return vehicleModelArrayList;
     }
 
-    public void setVehicleModelArrayList(ArrayList<VehicleModel> vehicleModelArrayList) {
+    public void setVehicleModelArrayList(ArrayList<VehicleListNewModel> vehicleModelArrayList) {
         this.vehicleModelArrayList = vehicleModelArrayList;
-    }
-
-    public ArrayList<TrackerModel> getTrackerModelArrayList() {
-        return trackerModelArrayList;
-    }
-
-    public void setTrackerModelArrayList(ArrayList<TrackerModel> trackerModelArrayList) {
-        this.trackerModelArrayList = trackerModelArrayList;
     }
 
     public int getStatus() {

@@ -4,7 +4,6 @@ package com.magni5.m5tracker.fragments;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +28,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.SphericalUtil;
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.activities.MainActivity;
@@ -39,14 +39,13 @@ import com.magni5.m5tracker.models.LatLagListModel;
 import com.magni5.m5tracker.models.LocationSpeedModel;
 import com.magni5.m5tracker.models.Model;
 import com.magni5.m5tracker.models.VehicleListModel;
-import com.magni5.m5tracker.models.VehicleModel;
+import com.magni5.m5tracker.models.VehicleListNewModel;
 import com.magni5.m5tracker.parsers.LatLngListParser;
 import com.magni5.m5tracker.parsers.LocationSpeedParser;
 import com.magni5.m5tracker.parsers.VehicleListParser;
 import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Utility;
 
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -62,9 +61,6 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     private View rootView;
 
     public static VehicleListModel vehicleListModel;
-    public static ArrayList<VehicleModel> vehicleModelArrayList;
-    public static ArrayList<LocationSpeedModel> locationSpeedModelArrayList;
-    private ArrayList<LatLagListModel> locationLatLagListModels;
 
     @BindView(R.id.fab_select_car)
     FloatingActionButton fabSelectCar;
@@ -129,7 +125,6 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         if (model != null) {
             if (model instanceof VehicleListModel) {
                 vehicleListModel = (VehicleListModel) model;
-                vehicleModelArrayList = vehicleListModel.getVehicleModelArrayList();
                 getTrackersData();
                 getTrackerPathsData();
                 handler.postDelayed(new Runnable() {
@@ -140,13 +135,27 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                     }
                 }, delay);
             } else if (model instanceof LocationSpeedModel) {
-                locationSpeedModelArrayList.add((LocationSpeedModel) model);
-                setMarkerOnMap((LocationSpeedModel) model);
+                LocationSpeedModel locationSpeedModel = (LocationSpeedModel) model;
+                if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0)
+                    for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+                        if (vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id().equalsIgnoreCase(locationSpeedModel.getTrackerId())) {
+                            VehicleListNewModel vehicleListNewModel = vehicleListModel.getVehicleModelArrayList().get(i);
+                            vehicleListNewModel.setLocationSpeedModel(locationSpeedModel);
+                            vehicleListModel.getVehicleModelArrayList().set(i, vehicleListNewModel);
+                        }
+                    }
+                //setMarkersData();
             } else if (model instanceof LatLagListModel) {
-                locationLatLagListModels.add((LatLagListModel) model);
                 LatLagListModel latLagListModel = (LatLagListModel) model;
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLagListModel.getLatLng()));
-                setPathsData();
+                if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0)
+                    for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+                        if (vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id().equalsIgnoreCase(latLagListModel.getTrackerId())) {
+                            VehicleListNewModel vehicleListNewModel = vehicleListModel.getVehicleModelArrayList().get(i);
+                            vehicleListNewModel.setLatLagListModel(latLagListModel);
+                            vehicleListModel.getVehicleModelArrayList().set(i, vehicleListNewModel);
+                        }
+                    }
+                setMarkersData();
             }
         } else {
             Utility.showToastMessage(mParent, Utility.getResourcesString(mParent, R.string.something_went_wrong));
@@ -163,53 +172,24 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     @Override
     public void onResume() {
         if (isDataGot) {
-            locationSpeedModelArrayList = new ArrayList<>();
-            locationLatLagListModels = new ArrayList<>();
             getVehiclesData();
         }
         super.onResume();
     }
 
-    private void setMarkerOnMap(LocationSpeedModel model) {
-        LatLng mLatLng = new LatLng(model.getLatitude(),
-                model.getLongitude());
-        Marker myMarker;
-        if (model.getIgnition() == 1) {
-            myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_on_marker))
-                            .position(mLatLng)
-                    /*.title(model.getMessage())*/);
-        } else {
-            myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_off_marker))
-                            .position(mLatLng)
-                    /*.title(model.getMessage())*/);
-        }
-
-        myMarker.setTag(model.get_id());
-    }
-
-    private void setPathsData() {
-        if (locationLatLagListModels != null && locationLatLagListModels.size() > 0) {
-            for (int i = 0; i < locationLatLagListModels.size(); i++) {
-                mMap.addPolyline(locationLatLagListModels.get(i).getPolylineOptions().color(Utility.getColor(mParent, R.color.light_gray)));
+    /*private void setPathsData() {
+        if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0) {
+            for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+                if (vehicleListModel.getVehicleModelArrayList().get(i).isChecked())
+                    mMap.addPolyline(vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel()
+                            .getPolylineOptions().color(Utility.getColor(mParent, R.color.light_gray)));
             }
         }
-    }
-
-
-    private void setPathsData(ArrayList<Integer> integers) {
-        if (locationLatLagListModels != null && locationLatLagListModels.size() > 0 && integers != null && integers.size() > 0) {
-            mMap.clear();
-            for (int i = 0; i < locationLatLagListModels.size(); i++) {
-                if (integers.contains(i)) {
-                    mMap.addPolyline(locationLatLagListModels.get(i).getPolylineOptions().color(Utility.getColor(mParent, R.color.light_gray)));
-                }
-            }
-        }
-    }
+    }*/
 
     private void getTrackerPathsData() {
-        for (int i = 0; i < vehicleListModel.getTrackerModelArrayList().size(); i++) {
-            getPathsData(vehicleListModel.getTrackerModelArrayList().get(i).get_id());
+        for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+            getPathsData(vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id());
         }
     }
 
@@ -239,8 +219,8 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         });
         LinearLayout ll_tackers_detail_list = (LinearLayout) mDialog.findViewById(R.id.ll_tackers_detail_list);
         ll_tackers_detail_list.removeAllViews();
-        if (locationSpeedModelArrayList != null && locationSpeedModelArrayList.size() > 0) {
-            for (int i = 0; i < locationSpeedModelArrayList.size(); i++) {
+        if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0) {
+            for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
                 LinearLayout itemList = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.tracker_list_item, null);
 
                 TextView tv_vehicle = (TextView) itemList.findViewById(R.id.tv_vehicle);
@@ -273,12 +253,8 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                     }
                 });
 
-                LocationSpeedModel locationSpeedModel = locationSpeedModelArrayList.get(i);
-                for (int j = 0; j < vehicleListModel.getVehicleModelArrayList().size(); j++) {
-                    if (locationSpeedModel.getTrackerId().equalsIgnoreCase(vehicleListModel.getTrackerModelArrayList().get(j).get_id())) {
-                        tv_vehicle_value.setText("" + vehicleListModel.getVehicleModelArrayList().get(j).getDisplayName());
-                    }
-                }
+                LocationSpeedModel locationSpeedModel = vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel();
+                tv_vehicle_value.setText("" + vehicleListModel.getVehicleModelArrayList().get(i).getDisplayName());
                 tv_speed_value.setText("" + String.format("%.2f", locationSpeedModel.getSpeed()));
                 tv_distance_travelled_value.setText("" + getDistanceTravelled(locationSpeedModel.getTrackerId()) + " Km");
                 tv_running_value.setText("" + getTravelledTime(locationSpeedModel.getTrackerId()));
@@ -309,9 +285,9 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
 
     private String getDistanceTravelled(String trackerId) {
         double distance = 0.0;
-        for (int i = 0; i < locationLatLagListModels.size(); i++) {
-            if (locationLatLagListModels.get(i).getTrackerId().equalsIgnoreCase(trackerId)) {
-                distance = SphericalUtil.computeLength(locationLatLagListModels.get(i).getLatLngArrayList());
+        for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+            if (vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id().equalsIgnoreCase(trackerId)) {
+                distance = SphericalUtil.computeLength(vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel().getLatLngArrayList());
             }
         }
         Utility.showLog("distance", "distance :" + String.format("%.2f", distance / 1000));
@@ -321,12 +297,12 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
 
     private String getTravelledTime(String trackerId) {
         String time = "";
-        for (int i = 0; i < locationLatLagListModels.size(); i++) {
-            if (locationLatLagListModels.get(i).getTrackerId().equalsIgnoreCase(trackerId)) {
-                Utility.showLog("getTodayOnTimeMs", "getTodayOnTimeMs " + locationLatLagListModels.get(i).getTodayOnTimeMs());
-                time = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(locationLatLagListModels.get(i).getTodayOnTimeMs()),
-                        TimeUnit.MILLISECONDS.toMinutes(locationLatLagListModels.get(i).getTodayOnTimeMs()) % TimeUnit.HOURS.toMinutes(1),
-                        TimeUnit.MILLISECONDS.toSeconds(locationLatLagListModels.get(i).getTodayOnTimeMs()) % TimeUnit.MINUTES.toSeconds(1));
+        for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+            if (vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id().equalsIgnoreCase(trackerId)) {
+                Utility.showLog("getTodayOnTimeMs", "getTodayOnTimeMs " + vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel().getTodayOnTimeMs());
+                time = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel().getTodayOnTimeMs()),
+                        TimeUnit.MILLISECONDS.toMinutes(vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel().getTodayOnTimeMs()) % TimeUnit.HOURS.toMinutes(1),
+                        TimeUnit.MILLISECONDS.toSeconds(vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel().getTodayOnTimeMs()) % TimeUnit.MINUTES.toSeconds(1));
                 Utility.showLog("getTodayOnTimeMs", "getToday " + time);
             }
         }
@@ -335,8 +311,8 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     }
 
     private void getTrackersData() {
-        for (int i = 0; i < vehicleListModel.getTrackerModelArrayList().size(); i++) {
-            getLocationsData(vehicleListModel.getTrackerModelArrayList().get(i).get_id());
+        for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+            getLocationsData(vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id());
         }
 
     }
@@ -397,33 +373,21 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         tv_alert_dialog_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> integers = new ArrayList<>();
-                if (vehicleModelArrayList != null && vehicleModelArrayList.size() > 0) {
-                    for (int i = 0; i < vehicleModelArrayList.size(); i++) {
-                        if (vehicleModelArrayList.get(i).isChecked()) {
-                            integers.add(i);
-                        }
-                    }
-                    setPathsData(integers);
-                    setMarkersData(integers);
-                }
+                setMarkersData();
                 mDialog.dismiss();
             }
         });
         mDialog.show();
     }
 
-    private void setMarkersData(ArrayList<Integer> integers) {
-        if (locationLatLagListModels != null && locationLatLagListModels.size() > 0 && integers != null && integers.size() > 0) {
-            for (int i = 0; i < locationLatLagListModels.size(); i++) {
-                if (integers.contains(i)) {
-                    String trackerId = locationLatLagListModels.get(i).getTrackerId();
-                    LocationSpeedModel locationSpeedModel = new LocationSpeedModel();
-                    for (int j = 0; j < locationSpeedModelArrayList.size(); j++) {
-                        if (trackerId.equalsIgnoreCase(locationSpeedModelArrayList.get(j).getTrackerId())) {
-                            locationSpeedModel = locationSpeedModelArrayList.get(j);
-                        }
-                    }
+    private void setMarkersData() {
+        if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0) {
+            if (mMap != null) {
+                mMap.clear();
+            }
+            for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+                if (vehicleListModel.getVehicleModelArrayList().get(i).isChecked()) {
+                    LocationSpeedModel locationSpeedModel = vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel();
                     LatLng mLatLng = new LatLng(locationSpeedModel.getLatitude(),
                             locationSpeedModel.getLongitude());
                     Marker myMarker;
@@ -433,6 +397,23 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                     } else {
                         myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_off_marker))
                                 .position(mLatLng));
+                    }
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+                    if (vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel() != null) {
+                        if (vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel().getIgnition() == 1) {
+                            PolylineOptions mPolygonOptions = vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel().getPolylineOptions();
+                            mPolygonOptions.add(mLatLng);
+                            VehicleListNewModel vehicleModel = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i);
+                            LatLagListModel latLagListModel = vehicleModel.getLatLagListModel();
+                            latLagListModel.setPolylineOptions(mPolygonOptions);
+                            latLagListModel.setTodayOnTimeMs(latLagListModel.getTodayOnTimeMs() + 7000);
+                            vehicleModel.setLatLagListModel(latLagListModel);
+                            vehicleListModel.getVehicleModelArrayList().set(i, vehicleModel);
+                            mMap.addPolyline(mPolygonOptions.color(Utility.getColor(mParent, R.color.light_gray)));
+                        } else {
+                            mMap.addPolyline(vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel().getPolylineOptions()
+                                    .color(Utility.getColor(mParent, R.color.light_gray)));
+                        }
                     }
                     myMarker.setTag(locationSpeedModel.get_id());
                 }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.fragments.HomeFragment;
-import com.magni5.m5tracker.models.VehicleModel;
+import com.magni5.m5tracker.models.VehicleListNewModel;
 import com.magni5.m5tracker.utils.Utility;
 
 /**
@@ -29,12 +29,12 @@ public class SelectVehicleAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return HomeFragment.vehicleModelArrayList.size();
+        return HomeFragment.vehicleListModel.getVehicleModelArrayList().size();
     }
 
     @Override
-    public VehicleModel getItem(int position) {
-        return HomeFragment.vehicleModelArrayList.get(position);
+    public VehicleListNewModel getItem(int position) {
+        return HomeFragment.vehicleListModel.getVehicleModelArrayList().get(position);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class SelectVehicleAdapter extends BaseAdapter {
             selectVehicleViewHolder = (SelectVehicleViewHolder) convertView.getTag();
         }
 
-        VehicleModel vehicleModel = HomeFragment.vehicleModelArrayList.get(position);
+        VehicleListNewModel vehicleModel = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(position);
         if (vehicleModel.isChecked()) {
             selectVehicleViewHolder.checkbox.setImageDrawable(Utility.getDrawable(context, R.drawable.ic_check_box_black_24dp));
         } else {
@@ -69,9 +69,9 @@ public class SelectVehicleAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int pos = (int) view.getTag();
-                VehicleModel vehicleModel = HomeFragment.vehicleModelArrayList.get(pos);
+                VehicleListNewModel vehicleModel = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(pos);
                 vehicleModel.setChecked(!vehicleModel.isChecked());
-                HomeFragment.vehicleModelArrayList.set(pos, vehicleModel);
+                HomeFragment.vehicleListModel.getVehicleModelArrayList().set(pos, vehicleModel);
                 notifyDataSetChanged();
             }
         });

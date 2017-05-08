@@ -1,9 +1,8 @@
 package com.magni5.m5tracker.parsers;
 
 import com.magni5.m5tracker.models.Model;
-import com.magni5.m5tracker.models.TrackerModel;
 import com.magni5.m5tracker.models.VehicleListModel;
-import com.magni5.m5tracker.models.VehicleModel;
+import com.magni5.m5tracker.models.VehicleListNewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,12 +26,11 @@ public class VehicleListParser implements Parser<Model> {
                 mVehicleListModel.setMessage(jsonObject.optString("Message"));
             if (jsonObject.has("Data") && jsonObject.optJSONArray("Data") != null) {
                 JSONArray jsonArray = jsonObject.optJSONArray("Data");
-                ArrayList<VehicleModel> vehicleModelArrayList = new ArrayList<>();
-                ArrayList<TrackerModel> trackerModelArrayList = new ArrayList<>();
+                ArrayList<VehicleListNewModel> vehicleModelArrayList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject itemJson = jsonArray.optJSONObject(i);
                     JSONObject mVehicleItemJson = itemJson.optJSONObject("Vehicle");
-                    VehicleModel vehicleModel = new VehicleModel();
+                    VehicleListNewModel vehicleModel = new VehicleListNewModel();
                     vehicleModel.set_id(mVehicleItemJson.optString("_id"));
                     vehicleModel.setDisplayNumber(mVehicleItemJson.optString("DisplayNumber"));
                     vehicleModel.setRegNumber(mVehicleItemJson.optString("RegNumber"));
@@ -41,17 +39,17 @@ public class VehicleListParser implements Parser<Model> {
                     vehicleModel.setOwnerId(mVehicleItemJson.optString("OwnerId"));
                     vehicleModel.setDisplayName(mVehicleItemJson.optString("DisplayName"));
                     vehicleModel.setChecked(true);
-                    vehicleModelArrayList.add(vehicleModel);
+
                     JSONObject mTrackerItemJson = itemJson.optJSONObject("Tracker");
-                    TrackerModel trackerModel = new TrackerModel();
-                    trackerModel.set_id(mTrackerItemJson.optString("_id"));
-                    trackerModel.setVersion(mTrackerItemJson.optInt("Version"));
-                    trackerModel.setIsLocked(mTrackerItemJson.optBoolean("IsLocked"));
-                    trackerModel.setTimeStamp(mTrackerItemJson.optString("TimeStamp"));
-                    trackerModel.setTag(mTrackerItemJson.optString("Tag"));
-                    trackerModelArrayList.add(trackerModel);
+
+                    vehicleModel.setTracker_id(mTrackerItemJson.optString("_id"));
+                    vehicleModel.setVersion(mTrackerItemJson.optInt("Version"));
+                    vehicleModel.setLocked(mTrackerItemJson.optBoolean("IsLocked"));
+                    vehicleModel.setTimeStamp(mTrackerItemJson.optString("TimeStamp"));
+                    vehicleModel.setTag(mTrackerItemJson.optString("Tag"));
+
+                    vehicleModelArrayList.add(vehicleModel);
                 }
-                mVehicleListModel.setTrackerModelArrayList(trackerModelArrayList);
                 mVehicleListModel.setVehicleModelArrayList(vehicleModelArrayList);
             }
         } catch (JSONException e) {
