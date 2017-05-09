@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
 
     private Handler handler;
     private Runnable runnable;
-    private int delay = 7000;
+    private int delay = 5000;
     private boolean isDataGot;
 
     @Override
@@ -139,12 +139,13 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0)
                     for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
                         if (vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id().equalsIgnoreCase(locationSpeedModel.getTrackerId())) {
+                            Utility.showLog("isUpdated", "isUpdated");
                             VehicleListNewModel vehicleListNewModel = vehicleListModel.getVehicleModelArrayList().get(i);
                             vehicleListNewModel.setLocationSpeedModel(locationSpeedModel);
                             vehicleListModel.getVehicleModelArrayList().set(i, vehicleListNewModel);
                         }
                     }
-                //setMarkersData();
+                setMarkersData();
             } else if (model instanceof LatLagListModel) {
                 LatLagListModel latLagListModel = (LatLagListModel) model;
                 if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0)
@@ -258,7 +259,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 tv_speed_value.setText("" + String.format("%.2f", locationSpeedModel.getSpeed()));
                 tv_distance_travelled_value.setText("" + getDistanceTravelled(locationSpeedModel.getTrackerId()) + " Km");
                 tv_running_value.setText("" + getTravelledTime(locationSpeedModel.getTrackerId()));
-                tv_time_value.setText("" + locationSpeedModel.getEventDateTime().substring(0,10));
+                tv_time_value.setText("" + locationSpeedModel.getEventDateTime().substring(0, 10));
                 if (locationSpeedModel.getIgnition() == 1) {
                     tv_ignition_value.setText("On");
                 } else {
@@ -406,7 +407,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                             VehicleListNewModel vehicleModel = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i);
                             LatLagListModel latLagListModel = vehicleModel.getLatLagListModel();
                             latLagListModel.setPolylineOptions(mPolygonOptions);
-                            latLagListModel.setTodayOnTimeMs(latLagListModel.getTodayOnTimeMs() + 7000);
+                            latLagListModel.setTodayOnTimeMs(latLagListModel.getTodayOnTimeMs() + delay);
                             vehicleModel.setLatLagListModel(latLagListModel);
                             vehicleListModel.getVehicleModelArrayList().set(i, vehicleModel);
                             mMap.addPolyline(mPolygonOptions.color(Utility.getColor(mParent, R.color.light_gray)));
