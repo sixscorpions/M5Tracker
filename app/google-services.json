@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "892373114712",
+    "firebase_url": "https://m5tracker-bdd3c.firebaseio.com",
+    "project_id": "m5tracker-bdd3c",
+    "storage_bucket": "m5tracker-bdd3c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892373114712:android:56d1d0f6d3dac316",
+        "android_client_info": {
+          "package_name": "com.m5tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892373114712-g9hsjkk5leakqpk0b4kv9gr3b6pfdjun.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2JyqsM3iPZuHTzk8woB8u2nl3vKLf-4o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

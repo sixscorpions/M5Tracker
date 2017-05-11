@@ -43,5 +43,8 @@ public class Constants {
     public static final String COMPANY_ADDRESS_PIN = "COMPANY_ADDRESS_PIN";
     public static final String COMPANY_ADDRESS_LANG = "COMPANY_ADDRESS_LANG";
     public static final String COMPANY_ADDRESS_LAT = "COMPANY_ADDRESS_LAT";
+    public static final String DEVICE_TOKEN = "DEVICE_TOKEN";
+    public static final String KEY_TOKEN_RECEIVER = "KEY_TOKEN_RECEIVER";
+    public static final String KEY_FCM_TOKEN = "KEY_FCM_TOKEN";
 
 }
