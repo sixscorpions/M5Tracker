@@ -75,6 +75,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     private Runnable runnable;
     private int delay = 5000;
     private boolean isDataGot;
+    private boolean isFirstTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,8 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
      * Initialize the ui and sets the type face and Find the listeners
      */
     private void initUI() {
-        isDataGot = false;
+        isDataGot = true;
+        isFirstTime = true;
         handler = new Handler();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         supportMapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
@@ -129,6 +131,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 getTrackerPathsData();
                 handler.postDelayed(new Runnable() {
                     public void run() {
+                        isFirstTime = false;
                         runnable = this;
                         handler.postDelayed(runnable, delay);
                         getTrackersData();
@@ -173,6 +176,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
     @Override
     public void onResume() {
         if (isDataGot) {
+            isFirstTime = true;
             getVehiclesData();
         }
         super.onResume();
@@ -374,6 +378,14 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
         tv_alert_dialog_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mMap != null) {
+                    mMap.clear();
+                }
+                for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
+                    VehicleListNewModel vehicleListNewModel = vehicleListModel.getVehicleModelArrayList().get(i);
+                    vehicleListNewModel.marker = null;
+                    vehicleListModel.getVehicleModelArrayList().set(i, vehicleListNewModel);
+                }
                 setMarkersData();
                 mDialog.dismiss();
             }
@@ -383,23 +395,30 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
 
     private void setMarkersData() {
         if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0) {
-            if (mMap != null) {
+            /*if (mMap != null) {
                 mMap.clear();
-            }
+            }*/
             for (int i = 0; i < vehicleListModel.getVehicleModelArrayList().size(); i++) {
                 if (vehicleListModel.getVehicleModelArrayList().get(i).isChecked()) {
                     LocationSpeedModel locationSpeedModel = vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel();
                     LatLng mLatLng = new LatLng(locationSpeedModel.getLatitude(),
                             locationSpeedModel.getLongitude());
-                    Marker myMarker;
-                    if (locationSpeedModel.getIgnition() == 1) {
-                        myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_on_marker))
+                    if (locationSpeedModel.getIgnition() == 1 && vehicleListModel.getVehicleModelArrayList().get(i).marker == null) {
+                        vehicleListModel.getVehicleModelArrayList().get(i).marker = mMap.addMarker(new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_on_marker))
                                 .position(mLatLng));
-                    } else {
-                        myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_off_marker))
+                    } else if (locationSpeedModel.getIgnition() == 0 && vehicleListModel.getVehicleModelArrayList().get(i).marker == null) {
+                        vehicleListModel.getVehicleModelArrayList().get(i).marker = mMap.addMarker(new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_ignition_off_marker))
                                 .position(mLatLng));
+                    } else/* if (locationSpeedModel.getIgnition() == 1 && vehicleListModel.getVehicleModelArrayList().get(i).marker != null) {
+                        vehicleListModel.getVehicleModelArrayList().get(i).marker.setPosition(mLatLng);
+                    } else if (locationSpeedModel.getIgnition() == 0 && vehicleListModel.getVehicleModelArrayList().get(i).marker != null)*/ {
+                        vehicleListModel.getVehicleModelArrayList().get(i).marker.setPosition(mLatLng);
                     }
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+                    if (isFirstTime)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+
                     if (vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel() != null) {
                         if (vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel().getIgnition() == 1) {
                             PolylineOptions mPolygonOptions = vehicleListModel.getVehicleModelArrayList().get(i).getLatLagListModel().getPolylineOptions();
@@ -416,7 +435,7 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                                     .color(Utility.getColor(mParent, R.color.light_gray)));
                         }
                     }
-                    myMarker.setTag(locationSpeedModel.get_id());
+                    //myMarker.setTag(locationSpeedModel.get_id());
                 }
             }
         }

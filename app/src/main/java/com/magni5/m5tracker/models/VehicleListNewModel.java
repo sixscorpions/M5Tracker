@@ -1,5 +1,7 @@
 package com.magni5.m5tracker.models;
 
+import com.google.android.gms.maps.model.Marker;
+
 /**
  * Created by Shankar on 5/8/2017.
  */
@@ -22,6 +24,8 @@ public class VehicleListNewModel {
     private String tracker_id;
     private LocationSpeedModel locationSpeedModel;
     private LatLagListModel latLagListModel;
+
+    public Marker marker;
 
 
     public String getRegNumber() {
@@ -151,4 +155,5 @@ public class VehicleListNewModel {
     public void setLatLagListModel(LatLagListModel latLagListModel) {
         this.latLagListModel = latLagListModel;
     }
+
 }
