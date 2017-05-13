@@ -16,11 +16,6 @@ import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 import com.magni5.m5tracker.utils.Validations;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import butterknife.BindView;
@@ -120,6 +115,23 @@ public class LoginActivity extends BaseActivity implements IAsyncCaller {
         Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_LAT, "" + signInModel.getData().getUser().getOwner().getAddress().getLatitude());
         Utility.setSharedPrefStringData(this, Constants.COMPANY_ADDRESS_LANG, "" + signInModel.getData().getUser().getOwner().getAddress().getLongitude());
 
+        sendPushNotificationsData();
+    }
+
+    private void sendPushNotificationsData() {
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        try {
+            linkedHashMap.put("pushToken", Utility.getSharedPrefStringData(LoginActivity.this, Constants.DEVICE_TOKEN));
+            linkedHashMap.put("deviceType", "ANDROID");
+            SignInParser mSignInParser = new SignInParser();
+            ServerJSONAsyncTask serverJSONAsyncTask = new ServerJSONAsyncTask(
+                    this, Utility.getResourcesString(this, R.string.please_wait), true,
+                    APIConstants.PUSH_REGISTER, linkedHashMap,
+                    APIConstants.REQUEST_TYPE.POST, this, mSignInParser);
+            Utility.execute(serverJSONAsyncTask);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loginAndNavigation(SignInModel signInModel) {

@@ -3,16 +3,12 @@ package com.magni5.m5tracker.asynctask;
 import android.content.Context;
 import android.support.compat.BuildConfig;
 
-
 import com.magni5.m5tracker.R;
 import com.magni5.m5tracker.models.Model;
 import com.magni5.m5tracker.parsers.Parser;
 import com.magni5.m5tracker.utils.APIConstants;
 import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -27,7 +23,6 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,7 +170,8 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
                 Utility.showLog("param1", "" + param1);
                 OutputStream os = connection.getOutputStream();
                 Writer writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-                if (mUrl.contains(APIConstants.SIGN_IN) || mUrl.contains(APIConstants.ADD_MARK) || mUrl.contains(APIConstants.ADDRESS_UPDATE)
+                if (mUrl.contains(APIConstants.SIGN_IN) || mUrl.contains(APIConstants.PUSH_REGISTER) || mUrl.contains(APIConstants.ADD_MARK)
+                        || mUrl.contains(APIConstants.ADDRESS_UPDATE)
                         || mUrl.contains(APIConstants.PASSWORD_CHANGE) || mUrl.contains(APIConstants.COMPANY_DETAILS_UPDATE) || mUrl.contains(APIConstants.USER_UPDATE)) {
                     Utility.showLog("mParams", "" + getURL(mParams));
                     writer.write(getURL(mParams));
@@ -199,6 +195,7 @@ public class ServerJSONAsyncTask extends BaseAsyncTask {
         int responseCode;
         try {
             responseCode = connection.getResponseCode();
+            Utility.showLog("responseCode<><>", "url" + url + " " + responseCode);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
