@@ -18,7 +18,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -36,13 +35,12 @@ import com.magni5.m5tracker.fragments.CompanyDetailsFragment;
 import com.magni5.m5tracker.fragments.HomeFragment;
 import com.magni5.m5tracker.fragments.SettingsFragment;
 import com.magni5.m5tracker.fragments.VehiclesFragment;
-import com.magni5.m5tracker.models.SignInModel;
 import com.magni5.m5tracker.utils.Constants;
 import com.magni5.m5tracker.utils.Utility;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     public static DrawerLayout drawerLayout;
     public static Toolbar toolbar;
