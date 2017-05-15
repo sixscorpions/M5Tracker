@@ -37,8 +37,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (params != null && params.size() > 0) {
             Utility.showLog("dataChat", "<><>" + params);
             Utility.showLog(TAG, "From: " + remoteMessage.getFrom());
-            Utility.showLog(TAG, "Notification Message Body: " + params.get("message"));
-            sendNotification(params.get("message").toString());
+            Utility.showLog(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage.getNotification().getBody());
         }
     }
 
