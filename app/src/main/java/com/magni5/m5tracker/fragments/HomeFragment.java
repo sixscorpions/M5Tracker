@@ -222,6 +222,16 @@ public class HomeFragment extends Fragment implements IAsyncCaller, OnMapReadyCa
                 mDialog.dismiss();
             }
         });
+
+        ImageView img_refresh = (ImageView) mDialog.findViewById(R.id.img_refresh);
+        img_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDataToTheLayout();
+                mDialog.dismiss();
+            }
+        });
+
         LinearLayout ll_tackers_detail_list = (LinearLayout) mDialog.findViewById(R.id.ll_tackers_detail_list);
         ll_tackers_detail_list.removeAllViews();
         if (vehicleListModel.getVehicleModelArrayList() != null && vehicleListModel.getVehicleModelArrayList().size() > 0) {

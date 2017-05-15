@@ -23,11 +23,24 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/img_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/img_close"
+            android:layout_toStartOf="@+id/img_close"
+            android:paddingEnd="@dimen/_4dp"
+            android:paddingRight="@dimen/_4dp"
+            android:src="@drawable/ic_autorenew_black_24dp" />
+
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingEnd="@dimen/_4dp"
             android:paddingRight="@dimen/_4dp"
             android:src="@drawable/ic_close_black_24dp" />
     </RelativeLayout>
