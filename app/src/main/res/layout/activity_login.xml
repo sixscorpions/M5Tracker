@@ -37,7 +37,7 @@
             android:layout_marginBottom="@dimen/_5dp"
             android:hint="@string/user_name"
             android:inputType="textNoSuggestions"
-            android:text="rss.srinivas@magni5.net"
+            android:text="rss.srinivas@gmail.com"
             android:textSize="@dimen/_14sp" />
 
         <EditText
@@ -46,7 +46,7 @@
             android:layout_marginTop="@dimen/_5dp"
             android:hint="@string/password"
             android:inputType="textPassword|textNoSuggestions"
-            android:text="test123"
+            android:text="tracker123"
             android:textSize="@dimen/_14sp" />
     </LinearLayout>
 

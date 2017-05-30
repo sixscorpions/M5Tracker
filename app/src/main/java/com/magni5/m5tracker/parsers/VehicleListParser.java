@@ -42,13 +42,16 @@ public class VehicleListParser implements Parser<Model> {
 
                     JSONObject mTrackerItemJson = itemJson.optJSONObject("Tracker");
 
-                    vehicleModel.setTracker_id(mTrackerItemJson.optString("_id"));
-                    vehicleModel.setVersion(mTrackerItemJson.optInt("Version"));
-                    vehicleModel.setLocked(mTrackerItemJson.optBoolean("IsLocked"));
-                    vehicleModel.setTimeStamp(mTrackerItemJson.optString("TimeStamp"));
-                    vehicleModel.setTag(mTrackerItemJson.optString("Tag"));
-
-                    vehicleModelArrayList.add(vehicleModel);
+                    if (mTrackerItemJson != null) {
+                        vehicleModel.setTracker_id(mTrackerItemJson.optString("_id"));
+                        vehicleModel.setVersion(mTrackerItemJson.optInt("Version"));
+                        vehicleModel.setLocked(mTrackerItemJson.optBoolean("IsLocked"));
+                        vehicleModel.setTimeStamp(mTrackerItemJson.optString("TimeStamp"));
+                        vehicleModel.setTag(mTrackerItemJson.optString("Tag"));
+                    }
+                    if (mTrackerItemJson != null) {
+                        vehicleModelArrayList.add(vehicleModel);
+                    }
                 }
                 mVehicleListModel.setVehicleModelArrayList(vehicleModelArrayList);
             }

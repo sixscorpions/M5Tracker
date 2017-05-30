@@ -88,6 +88,8 @@ public class LoginActivity extends BaseActivity implements IAsyncCaller {
                     setSharedPreferancesToSettingsScreen(signInModel);
                     Utility.setSharedPrefStringData(this, Constants.LOGIN_DATA_MODEL, signInModel.getLoginresponse());
                     loginAndNavigation(signInModel);
+                } else {
+                    Utility.showToastMessage(this, signInModel.getMessage());
                 }
             }
         }
