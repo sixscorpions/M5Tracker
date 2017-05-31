@@ -207,9 +207,10 @@ public class AddMarkerFragment extends Fragment implements OnMapReadyCallback, G
         double lng = 0;
         if (HomeFragment.vehicleListModel.getVehicleModelArrayList() != null && HomeFragment.vehicleListModel.getVehicleModelArrayList().size() > 0)
             for (int i = 0; i < HomeFragment.vehicleListModel.getVehicleModelArrayList().size(); i++) {
-                if (HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getTracker_id().equalsIgnoreCase(id)) {
+                if (HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).get_id().equalsIgnoreCase(id)) {
                     lat = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel().getLatitude();
                     lng = HomeFragment.vehicleListModel.getVehicleModelArrayList().get(i).getLocationSpeedModel().getLongitude();
+                    Utility.showLog("Lat and lng", "lat: " + lat + "lng: " + lng);
                 }
             }
         latLng = new LatLng(lat, lng);
